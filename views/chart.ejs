@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grouped Bar Chart</title>
+  <!-- Include Chart.js library -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<canvas id="groupedBarChart" width="400" height="200"></canvas>
+
+<script>
+// Sample data for two times and multiple measures
+const measures = ['BVMT-R Total (RCI=1)', 'TMT A (RCI=1.2)', 'TMT B (RCI=1.4)'];
+const time1Data = [10, 20, 30];
+const time2Data = [15, 25, 35];
+
+// Get the canvas element
+const canvas = document.getElementById('groupedBarChart');
+const ctx = canvas.getContext('2d');
+
+// Create the grouped bar chart
+const groupedBarChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: measures,
+    datasets: [
+      {
+        label: 'Time 1',
+        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+        data: time1Data,
+        barThickness: 50,
+      },
+      {
+        label: 'Time 2',
+        backgroundColor: 'rgba(255, 99, 132, 0.7)',
+        data: time2Data,
+        barThickness: 50,
+      },
+    ],
+  },
+  options: {
+    scales: {
+      x: {
+        stacked: false,
+      },
+      y: {
+        stacked: false,
+      },
+    },
+  },
+});
+</script>
+
+</body>
+</html>

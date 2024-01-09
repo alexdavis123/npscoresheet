@@ -1,0 +1,30 @@
+
+
+ <div class="float-container">
+
+ <div id="findClient">
+  <form  action="/process" method="post">
+   <h2>Get Client Result</h2>
+  <div class="float-left">
+    <label for="clientId">ClientID:</label>
+    <input type="text" id="clientId" name="clientId" required>
+    <small>the unique client ID you used when entering data</small>
+
+    </div>
+     <div class="float-left testnum">
+     <label for="testNum">Test Number:</label>
+     <select id="testNum" name="testNum" required>
+      <option value="1">1</option>
+      <option value="2">2</option>
+          
+    </select>
+<small class="float-right" id="testnumsmall">1:first time testing<br> 2: second time testing</small>
+    </div>
+
+    <div class="float-left button">
+    <button type="submit">Find</button>
+     </div>
+  </form>
+  </div>
+  </div>
+  <div class="clear"></div>

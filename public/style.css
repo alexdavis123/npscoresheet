@@ -1,0 +1,406 @@
+
+
+.exceptionally-high  { background-color: green; }
+    .above-average{ background-color: deepskyblue; }
+    .below-average{background-color: orange; }
+    .exceptionally-low { background-color: orangered; }
+
+
+body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #63696e;
+  margin:0;
+
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px; /* Add some spacing between the table and other elements */
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+@media screen and (max-width: 600px) {
+  table {
+    width: 100%;
+  }
+
+  th, td {
+    display: block;
+    width: 100%;
+  }
+}
+/*tr:nth-child(even) {
+  background-color: #f9f9f9;
+}*/
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+tr:hover {
+  background-color: #e5f7ff;
+}
+th, td {
+  padding: 12px;
+}
+th, td {
+  text-align: left;
+}
+th:hover {
+  cursor: pointer;
+}
+
+table tr td:first-child {
+  
+  font-weight: bold;
+
+   
+    }
+
+/*table tr td:nth-child(2){
+  font-size:14px;
+  font-weight: bold;
+  width: 110px;
+  
+    }*/
+
+.performance{
+    background-color: #FF9F1C;
+    
+  }
+
+.performance:hover{
+    background-color: #FF9F1C;
+  
+  }
+.predicted, .predicted:hover{
+    background-color: #FFBF69;
+ 
+  }
+
+
+.intellectual, .intellectual:hover{
+  background-color: #CBF3F0;
+}
+.academic, .academic:hover{
+  background-color: #2EC4B6;
+}
+
+.processing,.processing:hover{
+  background-color: #7EA16B;
+}
+.language,.language:hover{
+  background-color: #F29559;
+}
+.learning, .learning:hover{
+  background-color: #8F95D3;
+}
+.executive,.executive:hover{
+  background-color: #DBB1BC;
+}
+.perceptual,.perceptual:hover{
+  background-color: #D3C4E3;
+}
+.emotional,.emotional:hover{
+  background-color: #89DAFF;
+}
+.visuospatial,.visuospatial:hover{
+  background-color: #C3D898;
+}
+
+.attention,.attention:hover{
+  background-color: #F2D492;
+}
+
+
+/* Set the height and overflow for the container */
+    .table-container {
+      height: 100vh; /* Set to 100% of the viewport height */
+      overflow: auto;
+    }
+
+    /* Style for the header table */
+    .header-table {
+      position: sticky;
+      top: 0;
+      background-color: #f2f2f2;
+    }
+
+    /* Optional: Style for the content table */
+    .content-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .content-table th, .content-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    /*form*/
+    /* styles.css */
+
+
+
+
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #FEB775;
+  color: #074978;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+}
+
+button:hover {
+  background-color: #BBE0E8;
+  color: white;
+}
+
+button:focus{background-color:red;}
+
+button:active{
+  background-color: #BBE0E5;
+  color: white;
+
+}
+/* style.css */
+
+/* Basic stying for the form */
+
+
+form {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: left;
+  margin:0;
+  font-family: Garamond, serif;
+
+}
+h2{
+  text-align: center;
+  color:#074978;
+  margin:20px;
+  font-family: Garamond, serif;
+}
+
+/* Style for labels */
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+/* Style for input and select fields */
+input, select {
+  
+  padding: 8px;
+  margin: 5px 0 0 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.float-container {
+      width: 100%;
+      overflow: hidden; /* This is essential for clearing floats */
+      
+      margin:0 auto;
+    }
+
+    .float-left {
+      float: left;
+      margin: 0 10px 10px 0;
+   
+      box-sizing: border-box;
+    }
+
+    .float-right {
+      float: right;
+    
+ 
+      box-sizing: border-box;
+    }
+
+    /* Clearing floats for smaller screens */
+    @media (max-width: 600px) {
+      .float-left,
+      .float-right {
+        width: 100%;
+        float: none;
+      }
+    }
+.clear{
+   clear: both;
+}
+
+/* Style for the submit button */
+button {
+  font-weight: bold;
+  font-size: 13px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  width: 100%;
+  margin:10px 0;
+}
+
+/* Style for the dropdown */
+select {
+  
+  padding: 8px;
+  margin: 5px 0 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  appearance: none; /* Remove default arrow in Chrome/Safari */
+  -webkit-appearance: none; /* Remove default arrow in Chrome/Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+}
+
+/* Style for small text below the input fields */
+small {
+  font-size: 80%;
+  color: #888;
+}
+
+    header {
+      background-color:#FFF1D0;
+      color: #fff;
+      padding: 5px 20px 0px 0px;
+      text-align: left;
+    }
+    main{
+      margin:40px 20px 40px 20px;
+      min-height: 500px;
+    }
+    footer{
+
+      background-color: #BBE0E8;
+      color: #fff;
+      padding: 5px;
+      text-align: right;
+
+    }
+    header h1{
+      color: #074978;
+      margin: 15px 0 5px 20px;
+    }
+
+
+
+    h1 a#sitename{
+      padding:15px;
+      color: #074978;
+      text-decoration: none; /* This removes the underline */
+
+    }
+
+    h1 a#sitename:visited {
+       color: #074978;
+      text-decoration: none; /* This removes the underline */
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-end; 
+      background-color:#FFF1D0;
+   
+      width: 100%;
+    }
+
+    nav a {
+      color: #074978;
+      text-decoration: none;
+      padding:8px;
+      float:right;
+      margin: 0px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #6A5E44;
+      
+    }
+#findClient {
+  margin:0 auto;
+  width:600px;
+  display: block!important;
+
+}
+#findClient form{
+
+  padding:0;
+  margin:0;
+
+}
+#findClient .float-left{
+width:50%;
+}
+#findClient .testnum, #submitForm .testnum{
+  width:150px!important;
+  float: left;
+}
+#findClient .testnum option{
+
+}
+#findClient  .button{
+  width:100px;
+  margin:25px 0 0 0;
+}
+#findClient #testnumsmall,#submitForm #testnumsmall{
+  width:110px;
+  float:right;
+  margin:7px 0 0 0;
+}
+#findClient .float-left.age{
+  width:110px;
+}
+
+/*navigation*/
+#nav{
+  float:right;
+  margin:0;
+}
+#submitForm{
+  width:800px;
+}
+#submitForm .float-left{
+  width:90px;
+}
+#submitForm #clientid{
+  width:220px;
+}
+.readonly-input {
+      color: #555; /* Text color for a disabled look */
+      background-color: #eee; /* Background color for a disabled look */
+      cursor: not-allowed; /* Display a 'not-allowed' cursor on hover */
+    }
+

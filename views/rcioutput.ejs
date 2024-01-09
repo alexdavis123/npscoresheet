@@ -1,0 +1,58 @@
+ 
+ <h2><%= outputArray[0].client %>'s score comparison and RCI</h2>
+ <div class="float-container">
+ <% if (outputArray.length === 0) { %>
+    <p>No data available</p>
+  <% } else { %>
+    <table id="rcioutput">
+      <tr>
+        <th>Measure</th>
+        <th>Subtest</th>
+        <th>Test Number 1</th>
+        <th>Test Number 2</th>
+        <th>Diff</th>
+        <th>RCI</th>
+      </tr>
+      <% for (const entry of outputArray) { %>
+        <tr>
+          <td><%= entry.measure || '' %></td>
+          <td><%= entry.subtest || '' %></td>
+          <td><%= entry.score1 || '' %></td>
+          <td><%= entry.score2 || '' %></td>
+          <td><%= entry.diff || '' %></td>
+          <td><%= entry.rci || '' %></td>
+        </tr>
+      <% } %>
+    </table>
+  <% } %>
+  </div>
+<h3>RCI Critical Values</h3>
+
+<table border="1">
+  <tr>
+    <th>RCI Range</th>
+    <th>Percentile</th>
+  </tr>
+  <tr>
+    <td>± 1.0</td>
+    <td>16th percentile</td>
+  </tr>
+  <tr>
+    <td>± 1.5</td>
+    <td>6th - 7th percentile</td>
+  </tr>
+  <tr>
+    <td>± 1.64</td>
+    <td>5th percentile</td>
+  </tr>
+  <tr>
+    <td>± 2.0</td>
+    <td>2nd percentile</td>
+  </tr>
+  <tr>
+    <td>± 2.2</td>
+    <td>1st percentile</td>
+  </tr>
+</table>
+
+  <div class="clear"></div>

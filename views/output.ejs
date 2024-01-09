@@ -1,0 +1,533 @@
+
+  <h2><%= JSON.stringify(outputArray.Client).replace(/"/g, '') %> Result</h2>
+
+  <table border="0" id="ClientResult" class="content-table">
+  <thead id="header">
+    <tr>
+      <th>DOMAINS</th>
+      <th>MEASURE</th>
+      <th>SUB TEST/NORM</th>
+      <th>STANDARD</th>
+      <th>SCALED</th>
+      <th>T</th>
+      <th>z</th>
+      <th>PR</th>
+      <th>DESCRIPTOR</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+   
+    <tr class="predicted">
+      <td >Predicted / Premorbid Intellectual Function</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+
+    <tr class="intellectual">
+      <td >Intellectual / Global Function</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+    <tr>
+      <td></td>
+      <td>WAIS</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <tr class="academic">
+      <td class="academic">Academic</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      
+    </tr>
+    <tr class="attention">
+      <td >Attention</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <% if (outputArray.TSS['WAIS-DS'] && outputArray.TSS['WAIS-DS'].length > 0) { %>
+        <% outputArray.TSS['WAIS-DS'].forEach(function(subtest, index, array) { %>
+          <tr>
+           
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">WAIS-DS</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td><%= subtest.StandardScore %></td>
+             <td><%= subtest.ScaledScore %></td>
+            <td><%= subtest.T %></td>
+            <td></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+    
+   
+     <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <tr class="processing">
+      <td>Processing Speed</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+    </tr>
+   <% if (outputArray.TSS.TMTA && outputArray.TSS.TMTA.length > 0) { %>
+        <% outputArray.TSS.TMTA.forEach(function(subtest, index, array) { %>
+          <tr>
+           
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">TMT A</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td><%= subtest.StandardScore %></td>
+             <td><%= subtest.ScaledScore %></td>
+            <td><%= subtest.T %></td>
+            <td><%= subtest.Z %></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+    <tr class="">
+      <td></td>
+      <td></td>
+      <td>TMT A</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Some Other Norm</td>
+      <td></td>
+      
+    </tr>
+    <tr class="">
+      <td></td>
+      <td>SDMT</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+ 
+    </tr>
+    <tr >
+    <!-- New Learning and Memory -->
+    <tr class="language">
+      <td >Language Function</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <tr>
+      <td></td>
+      <td>COWAT</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+ 
+    </tr>
+    <tr>
+      <td></td>
+      <td>Animals</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+    </tr>
+    
+      <% if (outputArray.TSS['WAIS-VCI'] && outputArray.TSS['WAIS-VCI'].length > 0) { %>
+        <% outputArray.TSS['WAIS-VCI'].forEach(function(subtest, index, array) { %>
+          <tr>
+           
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">WAIS-VCI</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td><%= subtest.StandardScore %></td>
+             <td><%= subtest.ScaledScore %></td>
+            <td><%= subtest.T %></td>
+            <td></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+    <tr class="learning">
+      <td >Learning and Memory</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+  </tr>
+
+  <% if (outputArray.TSS['BVMT-R'] && outputArray.TSS['BVMT-R'].length > 0) { %>
+        <% outputArray.TSS['BVMT-R'].forEach(function(subtest, index, array) { %>
+          <tr>
+
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">BVMT-R</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td></td>
+             <td></td>
+            <td><%= subtest.T %></td>
+            <td></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+      <% if (outputArray.TSS['HVLT-R'] && outputArray.TSS['HVLT-R'].length > 0) { %>
+        <% outputArray.TSS['HVLT-R'].forEach(function(subtest, index, array) { %>
+          <tr>
+           
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">HVLT-R</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td></td>
+             <td></td>
+            <td><%= subtest.T %></td>
+            <td></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    
+    </tr>
+    <tr class="executive">
+      <td >Executive Function</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+  
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>WCST</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+     
+    </tr>
+    <tr class="visuospatial">
+      <td >Visuospatial</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   
+    </tr>
+    <tr class="">
+      <td ></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+    </tr>
+    <tr class="perceptual">
+      <td >Perceptual-Motor / Sensory</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>GPB L</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+ 
+    </tr>
+    <tr class="emotional">
+      <td >Emotional/ Personality Functioning/ Practical Judegment</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>|</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   
+    </tr>
+    <tr>
+      <td></td>
+      <td>BDI-II</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+   
+    </tr>
+    <!-- Add more rows as needed -->
+
+  </tbody>
+</table>
+<button id="downloadExcel">Download Excel</button>
+
+<script src="/download-excel.js"></script>
+
+

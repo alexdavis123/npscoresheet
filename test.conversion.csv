@@ -1,0 +1,122 @@
+_id,Z,PR,StandardScore,ScaledScore,T,Descriptor,NormRef
+6591bf033b324cbb2d0feb5d,4,99.9,160,22,90,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb5e,3.93,99.9,159,,89,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb5f,3.87,99.9,158,,88.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb60,3.8,99.9,157,,88,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb61,3.73,99.9,156,,87,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb62,3.67,99.9,155,21,86.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb63,3.6,99.9,154,,86,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb64,3.53,99.9,153,,85,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb65,3.47,99.9,152,,84.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb66,3.4,99.9,151,,84,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb67,3.33,99.9,150,20,83,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb68,3.27,99.9,149,,82.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb69,3.2,99.9,148,,82,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6a,3.13,99.9,147,,81,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6b,3.07,99.9,146,,80.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6c,3,99.9,145,19,80,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6d,2.93,99.8,144,,79.3,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6e,2.87,99.8,143,,79,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb6f,2.8,99.7,142,,78,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb70,2.73,99.7,141,,77,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb71,2.67,99.6,140,18,76.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb72,2.6,99.5,139,,76,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb73,2.53,99,138,,75.3,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb74,2.47,99,137,,75,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb75,2.4,99,136,,74,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb76,2.33,99,135,17,73,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb77,2.27,99,134,,72.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb78,2.2,99,133,,72,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb79,2.13,98,132,,71,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb7a,2.07,98,131,,70.7,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb7b,2,98,130,16,70,Exceptionally High,Wechsler
+6591bf033b324cbb2d0feb7c,1.93,97,129,,69,Above Average,Wechsler
+6591bf033b324cbb2d0feb7d,1.87,97,128,,68.7,Above Average,Wechsler
+6591bf033b324cbb2d0feb7e,1.8,96,127,,68,Above Average,Wechsler
+6591bf033b324cbb2d0feb7f,1.73,96,126,,67.3,Above Average,Wechsler
+6591bf033b324cbb2d0feb80,1.67,95,125,15,67,Above Average,Wechsler
+6591bf033b324cbb2d0feb81,1.6,95,124,,66,Above Average,Wechsler
+6591bf033b324cbb2d0feb82,1.53,94,123,,65.3,Above Average,Wechsler
+6591bf033b324cbb2d0feb83,1.47,93,122,,65,Above Average,Wechsler
+6591bf033b324cbb2d0feb84,1.4,92,121,,64,Above Average,Wechsler
+6591bf033b324cbb2d0feb85,1.33,91,120,14,63,Above Average,Wechsler
+6591bf033b324cbb2d0feb86,1.27,90,119,,62.7,High Average,Wechsler
+6591bf033b324cbb2d0feb87,1.2,88,118,,62,High Average,Wechsler
+6591bf033b324cbb2d0feb88,1.13,87,117,,61,High Average,Wechsler
+6591bf033b324cbb2d0feb89,1.07,86,116,,60.7,High Average,Wechsler
+6591bf033b324cbb2d0feb8a,1,84,115,13,60,High Average,Wechsler
+6591bf033b324cbb2d0feb8b,0.93,82,114,,59,High Average,Wechsler
+6591bf033b324cbb2d0feb8c,0.867,80.69,113,,58.7,High Average,Wechsler
+6591bf033b324cbb2d0feb8d,0.8,79,112,,58,High Average,Wechsler
+6591bf033b324cbb2d0feb8e,0.733,76.83,111,,57.3,High Average,Wechsler
+6591bf033b324cbb2d0feb8f,0.667,74.75,110,12,57,High Average,Wechsler
+6591bf033b324cbb2d0feb90,0.6,72.57,109,,56,Average,Wechsler
+6591bf033b324cbb2d0feb91,0.533,70.31,108,,55,Average,Wechsler
+6591bf033b324cbb2d0feb92,0.467,67.96,107,,54.7,Average,Wechsler
+6591bf033b324cbb2d0feb93,0.4,65.54,106,,54,Average,Wechsler
+6591bf033b324cbb2d0feb94,0.333,63,105,11,53,Average,Wechsler
+6591bf033b324cbb2d0feb95,0.267,61,104,,52.7,Average,Wechsler
+6591bf033b324cbb2d0feb96,0.2,57.93,103,,52,Average,Wechsler
+6591bf033b324cbb2d0feb97,0.133,55,102,,51.3,Average,Wechsler
+6591bf033b324cbb2d0feb98,0.067,53,101,,51,Average,Wechsler
+6591bf033b324cbb2d0feb99,0,50,100,10,50,Average,Wechsler
+6591bf033b324cbb2d0feb9a,-0.07,47,99,,49,Average,Wechsler
+6591bf033b324cbb2d0feb9b,-0.13,45,98,,48.7,Average,Wechsler
+6591bf033b324cbb2d0feb9c,-0.2,42,97,,48,Average,Wechsler
+6591bf033b324cbb2d0feb9d,-0.27,39,96,,47.3,Average,Wechsler
+6591bf033b324cbb2d0feb9e,-0.33,37,95,9,47,Average,Wechsler
+6591bf033b324cbb2d0feb9f,-0.4,34,94,,46,Average,Wechsler
+6591bf033b324cbb2d0feba0,-0.47,32,93,,45,Average,Wechsler
+6591bf033b324cbb2d0feba1,-0.53,30,92,,44.7,Average,Wechsler
+6591bf033b324cbb2d0feba2,-0.6,27,91,,44,Average,Wechsler
+6591bf033b324cbb2d0feba3,-0.67,25,90,8,43,Average,Wechsler
+6591bf033b324cbb2d0feba4,-0.73,23,89,,42.7,Low Average,Wechsler
+6591bf033b324cbb2d0feba5,-0.8,21,88,,42,Low Average,Wechsler
+6591bf033b324cbb2d0feba6,-0.87,19,87,,41,Low Average,Wechsler
+6591bf033b324cbb2d0feba7,-0.93,18,86,,40.7,Low Average,Wechsler
+6591bf033b324cbb2d0feba8,-1,16,85,7,40,Low Average,Wechsler
+6591bf033b324cbb2d0feba9,-1.07,14,84,,39,Low Average,Wechsler
+6591bf033b324cbb2d0febaa,-1.13,13,83,,38.7,Low Average,Wechsler
+6591bf033b324cbb2d0febab,-1.2,12,82,,38,Low Average,Wechsler
+6591bf033b324cbb2d0febac,-1.27,10,81,,37.3,Low Average,Wechsler
+6591bf033b324cbb2d0febad,-1.33,9,80,6,37,Low Average,Wechsler
+6591bf033b324cbb2d0febae,-1.4,8,79,,36,Below Average,Wechsler
+6591bf033b324cbb2d0febaf,-1.47,7,78,,35,Below Average,Wechsler
+6591bf033b324cbb2d0febb0,-1.53,6,77,,34.7,Below Average,Wechsler
+6591bf033b324cbb2d0febb1,-1.6,5,76,,34,Below Average,Wechsler
+6591bf033b324cbb2d0febb2,-1.67,5,75,5,33,Below Average,Wechsler
+6591bf033b324cbb2d0febb3,-1.73,4,74,,32.7,Below Average,Wechsler
+6591bf033b324cbb2d0febb4,-1.8,4,73,,32,Below Average,Wechsler
+6591bf033b324cbb2d0febb5,-1.87,3,72,,31,Below Average,Wechsler
+6591bf033b324cbb2d0febb6,-1.93,3,71,,30.7,Below Average,Wechsler
+6591bf033b324cbb2d0febb7,-2,2,70,4,30,Below Average,Wechsler
+6591bf033b324cbb2d0febb8,-2.07,2,69,,29,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febb9,-2.13,2,68,,28.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febba,-2.2,1,67,,28,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febbb,-2.267,1.17,66,,27.3,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febbc,-2.333,0.98,65,3,27,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febbd,-2.4,0.82,64,,26,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febbe,-2.467,0.68,63,,25,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febbf,-2.533,0.56,62,,24.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc0,-2.6,0.47,61,,24,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc1,-2.667,0.38,60,2,23,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc2,-2.733,0.31,59,,22.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc3,-2.8,0.3,58,,22,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc4,-2.867,0.2,57,,21.3,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc5,-2.933,0.17,56,,20.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc6,-3,0.1,55,1,20,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc7,-3.066666667,0.11,54,,19.3,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc8,-3.133333333,0.09,53,,19,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febc9,-3.2,0.07,52,,18,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febca,-3.266666667,0.05,51,,17,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febcb,-3.333,0.04,50,0,16.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febcc,-3.4,<0.1,49,,16,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febcd,-3.466666667,<0.1,48,,15,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febce,-3.533333333,<0.1,47,,14.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febcf,-3.6,<0.1,46,,14,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd0,-3.666666667,<0.1,45,,13.3,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd1,-3.733333333,<0.1,44,,13,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd2,-3.8,<0.1,43,,12,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd3,-3.866666667,<0.1,42,,11,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd4,-3.933333333,<0.1,41,,10.7,Exceptionally Low,Wechsler
+6591bf033b324cbb2d0febd5,-4,<0.1,40,,10,Exceptionally Low,Wechsler

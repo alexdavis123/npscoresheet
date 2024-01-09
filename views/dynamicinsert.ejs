@@ -1,0 +1,90 @@
+
+
+
+
+<h2>Enter Client Data</h2>
+<form id="submitForm" method="post">
+<div class="float-left" id="clientid">
+<label for="Name">ClientID:</label>
+<input type="text" id="name" name="Name" required><br>
+<small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters.</small><br>
+</div>
+<div class="float-left"</div>
+<label for="Sex">Sex</label>
+<select id="sex" name="Sex" required>
+<option value="M">M</option>
+<option value="F">F</option>
+</select>
+<br>
+<small>Assigned at birth</small>
+</div>
+<div class="float-left">
+<label for="Age">Age:</label>
+<input type="number" id="age" name="Age" required>
+</div>
+<div class="float-left">
+
+<label for="Education">Education:</label>
+<input type="number" id="education" name="Education" required>
+<small>Years of education</small>
+</div>
+<div class="float-left">
+
+<label for="Race">Race:</label>
+<select id="race" name="Race" required>
+<option value="White">White</option>
+<option value="Black">Black</option>
+<option value="Hispanic">Hispanic</option>
+<option value="Other">Other</option>
+</select>
+
+</div>
+<div class="float-left testnum" >
+
+<label for="TestNum">Test Number:</label>
+<select id="testNum" name="TestNum" required>
+<option value="1">1</option>
+<option value="2">2</option>
+</select>
+<small id="testnumsmall">If this is the first time testing, choose 1. This will be used to calculate RCI.</small>
+
+</div>
+
+<table id="dataTable">
+<thead>
+<tr>
+<th>Measure</th>
+<th>Subtest / Norm</th>
+<th>Raw</th>
+<th>T</th>
+<th>StandardScore</th>
+<th>ScaledScore</th>
+</tr>
+</thead>
+
+  <tbody>
+    <% for (let i = 0; i < dataArray.length; i++) { %>
+      <tr>
+        <% for (let j = 0; j < dataArray[i].length; j++) { %>
+          <td>
+            <% if (j < 2) { %>
+              <%= dataArray[i][j] %>
+            <% } else { %>
+              <input type="text" value="<%= dataArray[i][j] %>" <% if (dataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> <% if (j !== 0 && dataArray[i][j] !== "readonly") { %>tabindex="<%= i * (dataArray[i].length - 2) + j %>"<% } %>>
+            <% } %>
+          </td>
+        <% } %>
+      </tr>
+    <% } %>
+  </tbody>
+
+
+</table>
+
+
+<button id="saveForm">Save</button>
+
+
+</form>
+
+<script src="/submitform.js"></script>

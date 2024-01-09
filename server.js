@@ -1,8 +1,5 @@
 const uri = process.env.MONGODB_URI;
-const express = require('express');
-const app = express();
 const port = process.env.PORT || 3000;
-
 const express = require('express');
 const ejs = require('ejs');
 
@@ -23,7 +20,7 @@ app.set('view engine', 'ejs');
 
 // Middleware to use the layout
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
+//const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {

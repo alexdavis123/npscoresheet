@@ -1,6 +1,6 @@
 const express = require('express');
 const ejs = require('ejs');
-const { MongoClient } = require('mongodb');
+
 const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
@@ -17,16 +17,26 @@ app.set('layout', './layouts/full-width');
 app.set('view engine', 'ejs');
 
 // Middleware to use the layout
-//app.use(expressLayouts);
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
+
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
 
 app.use(express.static('public'));
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
 
 // Replace the uri string with your connection string.
-const uri = 'mongodb://localhost:27017';
-const client = new MongoClient(uri);
-const database = client.db('test');
+//const uri = 'mongodb://localhost:27017';
+//const client = new MongoClient(uri);
+const database = client.db('cluster0');
 const clients = database.collection('clients');
 const tombaughTMTA = database.collection('TombaughTMTA');
 const conversion = database.collection('conversion');
@@ -504,6 +514,6 @@ app.post('/processrci', async (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server is running at http://localhost:${port}`);
+// });

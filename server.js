@@ -38,7 +38,7 @@ app.set('view engine', 'ejs');
 // Replace the uri string with your connection string.
 //const uri = 'mongodb://localhost:27017';
 //const client = new MongoClient(uri);
-const database = client.db('cluster0');
+const database = client.db('npscoresheet');
 const clients = database.collection('clients');
 const tombaughTMTA = database.collection('TombaughTMTA');
 const conversion = database.collection('conversion');

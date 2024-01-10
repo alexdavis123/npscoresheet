@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB_URI;
+//const uri = process.env.MONGODB_URI;
 const port = process.env.PORT || 3000;
 const express = require('express');
 const ejs = require('ejs');

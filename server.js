@@ -438,9 +438,9 @@ app.post('/submit', async (req, res) => {
  //console.log('Received form data:', req.body);
   try {
     //await connectToDatabase(); 
-    const uri = 'mongodb://localhost:27017/test';
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    
+   // const uri = 'mongodb://localhost:27017/test';
+   // mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    await client.connect();
     console.log('sumission sch',Submission);
   // Extract common fields from the request body
     const { Name, Sex, Education, Age, Race, TestNum} = req.body;
@@ -469,6 +469,7 @@ app.post('/process', async (req, res) => {
   console.log('post to process');
 
   try {
+    await client.connect();
     const clientId = req.body.clientId;
     const testNum = req.body.testNum;
     //console.log('get client id', testNum );
@@ -511,6 +512,7 @@ app.post('/processrci', async (req, res) => {
 
 
    try {
+     await client.connect();
         const clientId = req.body.clientid;
         const age = req.body.age;
         console.log('req',clientId,age);

@@ -105,7 +105,7 @@ async function connectToDatabase() {
   }
 }
 
-
+//connectToMongoDB();
 
 async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) {
   await connectToDatabase(); 

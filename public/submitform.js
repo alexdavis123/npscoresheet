@@ -48,7 +48,6 @@
         }
       });
       });
-<<<<<<< HEAD
 
      $('#generateBtn').on('click', function() {
       const clientIdInput = $('#name');
@@ -80,7 +79,3 @@
   });
 
 
-=======
-     
-  });
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47

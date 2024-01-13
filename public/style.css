@@ -5,7 +5,6 @@
     .below-average{background-color: orange; }
     .exceptionally-low { background-color: orangered; }
 
-<<<<<<< HEAD
 input[type="text"] {
             font-size: 16px; /* Change the size to your preference */
             padding: 5px; /* Optional: Adjust padding as needed */
@@ -14,17 +13,10 @@ body{
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.5;
-=======
-
-body{
-  font-family: 'Roboto', sans-serif;
-  font-size: 14px;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
   color: #63696e;
   margin:0;
 
 }
-<<<<<<< HEAD
  ul {
             list-style-type: square;
             margin-left: 20px;
@@ -33,8 +25,6 @@ body{
     margin:0 0 10px 0;
     line-height: 1.3em;
   }
-=======
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 table {
   width: 100%;
   border-collapse: collapse;
@@ -94,61 +84,12 @@ table tr td:first-child {
   
     }*/
 
-<<<<<<< HEAD
 p{
   line-height: 1.5em;
 }
 
 .float-container.about{
   width:60%!important;
-=======
-.performance{
-    background-color: #FF9F1C;
-    
-  }
-
-.performance:hover{
-    background-color: #FF9F1C;
-  
-  }
-.predicted, .predicted:hover{
-    background-color: #FFBF69;
- 
-  }
-
-
-.intellectual, .intellectual:hover{
-  background-color: #CBF3F0;
-}
-.academic, .academic:hover{
-  background-color: #2EC4B6;
-}
-
-.processing,.processing:hover{
-  background-color: #7EA16B;
-}
-.language,.language:hover{
-  background-color: #F29559;
-}
-.learning, .learning:hover{
-  background-color: #8F95D3;
-}
-.executive,.executive:hover{
-  background-color: #DBB1BC;
-}
-.perceptual,.perceptual:hover{
-  background-color: #D3C4E3;
-}
-.emotional,.emotional:hover{
-  background-color: #89DAFF;
-}
-.visuospatial,.visuospatial:hover{
-  background-color: #C3D898;
-}
-
-.attention,.attention:hover{
-  background-color: #F2D492;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 }
 
 
@@ -162,11 +103,7 @@ p{
     .header-table {
       position: sticky;
       top: 0;
-<<<<<<< HEAD
       background-color: #FEB775;
-=======
-      background-color: #f2f2f2;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
     }
 
     /* Optional: Style for the content table */
@@ -180,13 +117,9 @@ p{
       padding: 8px;
       text-align: left;
     }
-<<<<<<< HEAD
 .content-table .domain, .content-table .domain:hover{
  background-color: #BBE0E8;
 }
-=======
-
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
     /*form*/
     /* styles.css */
 
@@ -339,11 +272,7 @@ small {
     }
     main{
       margin:40px 20px 40px 20px;
-<<<<<<< HEAD
       
-=======
-      min-height: 500px;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
     }
     footer{
 
@@ -396,21 +325,13 @@ small {
     }
 #findClient {
   margin:0 auto;
-<<<<<<< HEAD
   width:800px;
-=======
-  width:600px;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
   display: block!important;
 
 }
 #findClient form{
 
-<<<<<<< HEAD
   padding:0 0 0 50px;
-=======
-  padding:0;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
   margin:0;
 
 }
@@ -418,11 +339,7 @@ small {
 width:50%;
 }
 #findClient .testnum, #submitForm .testnum{
-<<<<<<< HEAD
   width:190px!important;
-=======
-  width:150px!important;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
   float: left;
 }
 #findClient .testnum option{
@@ -433,11 +350,7 @@ width:50%;
   margin:25px 0 0 0;
 }
 #findClient #testnumsmall,#submitForm #testnumsmall{
-<<<<<<< HEAD
   width:150px;
-=======
-  width:110px;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
   float:right;
   margin:7px 0 0 0;
 }
@@ -445,22 +358,18 @@ width:50%;
   width:110px;
 }
 
-<<<<<<< HEAD
 #ClientResult thead{
   color:white;
 
   background-color: #6A5E44;
 
 }
-=======
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 /*navigation*/
 #nav{
   float:right;
   margin:0;
 }
 #submitForm{
-<<<<<<< HEAD
  width: 1200px;
 }
 #submitForm .float-left{
@@ -470,15 +379,6 @@ width:50%;
   width:300px;
   float:left;
   margin:0 20px 0 0;
-=======
-  width:800px;
-}
-#submitForm .float-left{
-  width:90px;
-}
-#submitForm #clientid{
-  width:220px;
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 }
 .readonly-input {
       color: #555; /* Text color for a disabled look */

@@ -535,8 +535,4 @@ app.post('/processrci', async (req, res) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47

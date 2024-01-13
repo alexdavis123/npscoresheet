@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 const express = require('express');
 const ejs = require('ejs');
 const { MongoClient } = require('mongodb');
@@ -539,3 +540,5 @@ process.on('exit', closeConnection);
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+=======
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47

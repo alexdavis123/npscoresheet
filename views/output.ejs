@@ -7,14 +7,21 @@
       <th>DOMAINS</th>
       <th>MEASURE</th>
       <th>SUB TEST/NORM</th>
+<<<<<<< HEAD
       <th>RAW</th>
+=======
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
       <th>STANDARD</th>
       <th>SCALED</th>
       <th>T</th>
       <th>z</th>
       <th>PR</th>
       <th>DESCRIPTOR</th>
+<<<<<<< HEAD
       
+=======
+      <th></th>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
       <th></th>
     </tr>
   </thead>
@@ -36,7 +43,11 @@
     </tr>
     <tr>
       <td></td>
+<<<<<<< HEAD
       <td>TOPF</td>
+=======
+      <td></td>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
       <td></td>
       <td></td>
       <td></td>
@@ -128,7 +139,10 @@
               <td rowspan="<%= array.length %>">WAIS-DS</td>
             <% } %>
             <td><%= subtest.Subtest %></td>
+<<<<<<< HEAD
             <td><%= subtest.Raw %></td>
+=======
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
             <td><%= subtest.StandardScore %></td>
              <td><%= subtest.ScaledScore %></td>
             <td><%= subtest.T %></td>
@@ -136,7 +150,11 @@
             <td><%= subtest.PR %></td>
             <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
             <td></td>
+<<<<<<< HEAD
             
+=======
+            <td></td>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
           </tr>
         <% }); %>
       <% } else { %>
@@ -216,6 +234,7 @@
       <td></td>
 
     </tr>
+<<<<<<< HEAD
  <% if (outputArray.TSS['TMTA'] && outputArray.TSS['TMTA'].length > 0) { %>
   <% outputArray.TSS['TMTA'].forEach(function(subtest, index, array) { %>
     <tr>
@@ -244,6 +263,32 @@
   </tr>
 <% } %>
 
+=======
+   <% if (outputArray.TSS.TMTA && outputArray.TSS.TMTA.length > 0) { %>
+        <% outputArray.TSS.TMTA.forEach(function(subtest, index, array) { %>
+          <tr>
+           
+      <td></td>
+            <% if (index === 0) { %>
+              <td rowspan="<%= array.length %>">TMT A</td>
+            <% } %>
+            <td><%= subtest.Subtest %></td>
+            <td><%= subtest.StandardScore %></td>
+             <td><%= subtest.ScaledScore %></td>
+            <td><%= subtest.T %></td>
+            <td><%= subtest.Z %></td>
+            <td><%= subtest.PR %></td>
+            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        <% }); %>
+      <% } else { %>
+        <tr>
+          <td colspan="5">No data available for BVMT-R</td>
+        </tr>
+      <% } %>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
     <tr class="">
       <td></td>
       <td></td>

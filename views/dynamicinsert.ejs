@@ -4,10 +4,17 @@
 
 <h2>Enter Client Data</h2>
 <form id="submitForm" method="post">
+<<<<<<< HEAD
 <div class="" id="clientid">
 <label for="Name">ClientID:</label>
 <input type="text" id="name" name="Name" required><button type="button" id="generateBtn">Generate Random ID</button><br>
 
+=======
+<div class="float-left" id="clientid">
+<label for="Name">ClientID:</label>
+<input type="text" id="name" name="Name" required><br>
+<small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters.</small><br>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 </div>
 <div class="float-left"</div>
 <label for="Sex">Sex</label>
@@ -15,6 +22,10 @@
 <option value="M">M</option>
 <option value="F">F</option>
 </select>
+<<<<<<< HEAD
+=======
+<br>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 <small>Assigned at birth</small>
 </div>
 <div class="float-left">
@@ -46,11 +57,17 @@
 <option value="2">2</option>
 </select>
 <small id="testnumsmall">If this is the first time testing, choose 1. This will be used to calculate RCI.</small>
+<<<<<<< HEAD
 </div>
 <div class="clear"></div>
 <small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters or use the random id generator button</small><br>
 <p> Note: If the test allows for both input of RAW and T score, T score MUST be entered to generate the score sheet. RAW score alone will not be converted to T score</p>
 <p> Tip: you can press TAB key to navigate down the input fields</p>
+=======
+
+</div>
+
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 <table id="dataTable">
 <thead>
 <tr>
@@ -60,6 +77,7 @@
 <th>T</th>
 <th>StandardScore</th>
 <th>ScaledScore</th>
+<<<<<<< HEAD
 <th>Domain</th>
 </tr>
 </thead>
@@ -82,6 +100,26 @@
   <% } %>
 </tbody>
 
+=======
+</tr>
+</thead>
+
+  <tbody>
+    <% for (let i = 0; i < dataArray.length; i++) { %>
+      <tr>
+        <% for (let j = 0; j < dataArray[i].length; j++) { %>
+          <td>
+            <% if (j < 2) { %>
+              <%= dataArray[i][j] %>
+            <% } else { %>
+              <input type="text" value="<%= dataArray[i][j] %>" <% if (dataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> <% if (j !== 0 && dataArray[i][j] !== "readonly") { %>tabindex="<%= i * (dataArray[i].length - 2) + j %>"<% } %>>
+            <% } %>
+          </td>
+        <% } %>
+      </tr>
+    <% } %>
+  </tbody>
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47
 
 
 </table>
@@ -93,4 +131,7 @@
 </form>
 
 <script src="/submitform.js"></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> c5fb1e4a4e25efd4c82cdc7e9fd2a735bbfd1a47

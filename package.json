@@ -1,5 +1,5 @@
 {
-  "name": "r2r",
+  "name": "npscoresheet",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "express-fileupload": "^1.4.3",
     "fs": "^0.0.1-security",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.0.3",
+    "mongoose": "^8.0.4",
     "multer": "^1.4.4"
   },
   "description": ""

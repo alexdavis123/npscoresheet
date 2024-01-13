@@ -1,9 +1,13 @@
+
 const express = require('express');
 const ejs = require('ejs');
 const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
 const app = express();
 const port = 3000;
+const { databaseConnectionMiddleware, closeConnection, getDatabase, getClient } = require('./db');
+
+
 
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
@@ -22,11 +26,13 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
-
+// Apply the middleware to connect to the database before handling any requests
+app.use(databaseConnectionMiddleware);
 // Replace the uri string with your connection string.
-const uri = 'mongodb://localhost:27017';
-const client = new MongoClient(uri);
-const database = client.db('test');
+// const uri = 'mongodb://localhost:27017/test';
+// const client = new MongoClient(uri);
+// const database = client.db('test');
+const database = getClient().db('test');
 const clients = database.collection('clients');
 const tombaughTMTA = database.collection('TombaughTMTA');
 const conversion = database.collection('conversion');
@@ -34,9 +40,7 @@ const waisem =  database.collection('waissem');
 // const query = { Name: 'haha', TestNum: 1 };
 
 
-app.get('/insert', (req, res) => {
-  res.render('insert', { title: 'Submit Data'});
-});
+
 app.get('/thankyou', (req, res) => {
   res.render('thankyou',{ title: 'Thank You'});
 });
@@ -58,32 +62,55 @@ app.get('/', (req, res) => {
 });
 
 
-const dataArray = [
-  ["BVMT-R", "Total","readonly","","readonly","readonly"],
-  ["BVMT-R", "DR","readonly","","readonly","readonly"],
-  ["HVLT-R", "Total","readonly","","readonly","readonly"]
+const insertdataArray = [
+  ["BVMT-R", "Trial 1","","","readonly","readonly","Memory"],
+  ["BVMT-R", "Trial 2","","","readonly","readonly","Memory"],
+  ["BVMT-R", "Trial 3","","","readonly","readonly", "Memory"],
+  ["BVMT-R", "Total","readonly","","readonly","readonly", "Memory"],
+  ["BVMT-R", "Copy","","readonly","readonly","readonly", "Memory"],
+  ["BVMT-R", "DR","readonly","","readonly","readonly","Memory"],
+  ["HVLT-R", "Trial 1","","","readonly","readonly","Memory"],
+  ["HVLT-R", "Trial 2","","","readonly","readonly","Memory"],
+  ["HVLT-R", "Trial 3","","","readonly","readonly","Memory"],
+  ["HVLT-R", "Total","readonly","","readonly","readonly","Memory"],
+  ["HVLT-R", "DR","readonly","","readonly","readonly","Memory"],
+  ["HVLT-R", "Retention%","readonly","","readonly","readonly","Memory"],
+  ["WMS-IV", "LM-I","readonly","readonly","readonly","","Memory"],
+  ["WMS-IV", "LM-II","readonly","readonly","readonly","","Memory"],
+  ["WAIS-DS", "Total","readonly","readonly","readonly","","Attention"],
+  ["WAIS-DS", "DSF","readonly","readonly","readonly","","Attention"],
+  ["WAIS-DS", "DSB","readonly","readonly","readonly","","Attention"],
+  ["WAIS-DS", "DSS","readonly","readonly","readonly","","Attention"],
+  ["TMTA", "","readonly","","readonly","readonly","Processing Speed"],
+  ["TMTB", "","readonly","","readonly","readonly","Executive"],
+  ["NAB", "Naming","readonly","","readonly","readonly","Language"],
+  ["FAS", "","readonly","","readonly","readonly","Language"],
+  ["Animal", "","readonly","","readonly","readonly","Language"],
+  ["WCST", "Total Errors","readonly","readonly","","readonly","Executive"],
+  ["WCST", "Perseverative Responses","readonly","readonly","","readonly","Executive"],
+  ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive"],
+  ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive"],
+  ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive"],
 ];
 
 
 
-app.get('/dynamicinsert', (req, res) => {
-  res.render('dynamicinsert', { dataArray,title:'dynamicinsert'});
+app.get('/insert', (req, res) => {
+  res.render('dynamicinsert', { insertdataArray,title:'dynamicinsert'});
 });
 
-async function connectToDatabase() {
-  try {
-    await client.connect();
-    console.log('Connected to the database');
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-    throw error;
-  }
-}
+// app.get('/insert', (req, res) => {
+//   res.render('dynamicinsert', { title: 'Submit Data'});
+// });
+
+// Middleware to connect to the database
+app.use(databaseConnectionMiddleware);
+
 
 
 
 async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) {
-  await connectToDatabase(); 
+ // await connectToDatabase(); 
   console.log('getcomparescores input',clientid,testNum,subtest,measure,scoretype);
   const compareNum1 = await clients.findOne({ $and: [{ Name: clientid }, { TestNum: 1}, { Subtest: subtest }, { Measure: measure }] });
   console.log('compareNum1 ',compareNum1);
@@ -99,7 +126,7 @@ async function getRCIs(clientid, age) {
   let rcisArray = [];
 
   try {
-    await connectToDatabase(); 
+   // await connectToDatabase(); 
     //const query = { age: 79 };
     const semRows = await waisem.find({ age: Number(age) }).toArray();
 
@@ -131,7 +158,7 @@ async function getRCIs(clientid, age) {
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
   } finally {
-    await client.close();
+    //await client.close();
   }
 }
 
@@ -139,7 +166,7 @@ async function getRCIs(clientid, age) {
 async function rearrangeData(query) {
 
   try {
-    await client.connect();
+   // await client.connect();
   //  console.log('Connected to MongoDB');
 
 
@@ -158,6 +185,7 @@ async function rearrangeData(query) {
               T: '$T',
               StandardScore: '$StandardScore',
               ScaledScore: '$ScaledScore',
+              Domain:'$Domain',
             },
           },
         },
@@ -195,8 +223,8 @@ function getDataForTargets(rearrangedData, targetMeasures) {
 async function getUniqueMeasureNames(query) {
 
   try {
-    await client.connect();
-    console.log('Connected to MongoDB');
+    //await client.connect();
+   // console.log('Connected to MongoDB');
 
     // Use MongoDB find and toArray to convert the cursor to an array
     const resultArray = await clients.find(query).toArray();
@@ -209,15 +237,15 @@ async function getUniqueMeasureNames(query) {
     console.error('Error connecting to MongoDB:', error);
     throw error; // Rethrow the error to handle it elsewhere if needed
   } finally {
-    await client.close();
-    console.log('Connection closed');
+    //await client.close();
+    //console.log('Connection closed');
   }
 }
 
 // Example usage:
 async function processTSSArray(resultInputArray,clientId,testNum) {
  // const resultsArray = [];
-  await connectToDatabase(); // Ensure the connection is established
+  //await connectToDatabase(); // Ensure the connection is established
   console.log('resultinputarray',resultInputArray);
   const inputObject=resultInputArray;
 
@@ -244,26 +272,22 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
 
           //console.log('subtests',subtest);
 
-
-
           } catch (error) {
             console.error('Error querying conversion:', error);
           }
         }
         if (subtest.Raw) {
           console.log(`Raw: ${subtest.Raw}`);
-          const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
-            clientId,
-            testNum,
-            tombaughTMTA,
-            conversion,
-
-            );
-          subtest.PR = resultConversionZ[0].PR;
-          subtest.Descriptor = resultConversionZ[0].Descriptor;
-          subtest.Z= resultConversionZ[0].Z;
-          subtest.T= resultConversionZ[0].T;
-          console.log('convert Z',resultConversionZ[0]);
+          // const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
+          //   clientId,
+          //   testNum,
+          //   tombaughTMTA,
+          //   conversion,);
+          // subtest.PR = resultConversionZ[0].PR;
+          // subtest.Descriptor = resultConversionZ[0].Descriptor;
+          // subtest.Z= resultConversionZ[0].Z;
+          // subtest.T= resultConversionZ[0].T;
+          // console.log('convert Z',resultConversionZ[0]);
 
         }
         if (subtest.StandardScore) {
@@ -279,12 +303,9 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
 
           //console.log('subtests',subtest);
 
-
-
           } catch (error) {
             console.error('Error querying conversion:', error);
           }
-
 
         }
         if (subtest.ScaledScore) {
@@ -300,8 +321,6 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
 
           //console.log('subtests',subtest);
 
-
-
           } catch (error) {
             console.error('Error querying conversion:', error);
           }
@@ -313,7 +332,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
   }
 } finally {
     // Ensure to close the client after processing
-  await client.close();
+ // await client.close();
 }
 
 return resultInputArray;
@@ -386,10 +405,7 @@ async function calculateTMTAZAndResult(clientId, testNum, tombaughTMTA, conversi
   }
 }
 
-// const dataToInsert = {
-//         Name: 'John Doe',
-//         Age: 30,
-//       };
+
 
 const submissionSchema = new mongoose.Schema({
       Name: String,
@@ -404,6 +420,7 @@ const submissionSchema = new mongoose.Schema({
       T: Number,
       StandardScore: Number,
       ScaledScore: Number,
+      Domain: String,
     });
 const Submission = mongoose.model('Submission', submissionSchema, 'clients');
 //Submission.create(dataToInsert);
@@ -413,8 +430,8 @@ app.post('/submit', async (req, res) => {
  //console.log('Received form data:', req.body);
   try {
     //await connectToDatabase(); 
-    const uri = 'mongodb://localhost:27017/test';
-    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    // const uri = 'mongodb://localhost:27017/test';
+    // mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     
     console.log('sumission sch',Submission);
   // Extract common fields from the request body
@@ -460,17 +477,30 @@ app.post('/process', async (req, res) => {
     const targetMeasuresToRetrieve = uniqueMeasureNamesResult;
     const resultData = getDataForTargets(rearrangedData, targetMeasuresToRetrieve);
     const resultsTSS = await processTSSArray(resultData,clientId,testNum);
-    console.log('resultsTSS', resultsTSS);
+    const testlistArray  = Object.fromEntries( 
+      Object.entries(resultsTSS ).map(([key, value]) => [key,value.filter(item => item.T !== null)]));
+    console.log('testlist',testlistArray);
+   
+    // Function to filter items with T not null
+    const filterItemsWithTNotNull = (array) => array.filter(item => item.T !== null);
+
+    // Apply the function to each array in the data
+    const resultNotNull = {};
+    Object.entries(resultsTSS).forEach(([key, value]) => {
+      resultNotNull[key] = filterItemsWithTNotNull(value);
+    });
+
+   console.log('resultNotNull', resultNotNull);
 
     // Format output
     let outputArray = {
       Client: clientId,
       ClientAge: result.Age,
-      TSS: resultsTSS,
+      TSS: resultNotNull,
     };
 
     // Render the results
-    res.render('output', { outputArray, title: 'Client Result' });
+    res.render('dynamicoutput', { outputArray, title: 'Client Result' });
   } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');
@@ -483,7 +513,6 @@ app.post('/process', async (req, res) => {
 
 app.post('/processrci', async (req, res) => {
   console.log('post to rci process');
-
 
    try {
         const clientId = req.body.clientid;
@@ -502,6 +531,9 @@ app.post('/processrci', async (req, res) => {
   }
 
 });
+
+// Middleware to close the database connection when the application exits
+process.on('exit', closeConnection);
 
 // Start the server
 app.listen(port, () => {

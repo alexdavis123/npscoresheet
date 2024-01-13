@@ -5,14 +5,26 @@
     .below-average{background-color: orange; }
     .exceptionally-low { background-color: orangered; }
 
-
+input[type="text"] {
+            font-size: 16px; /* Change the size to your preference */
+            padding: 5px; /* Optional: Adjust padding as needed */
+        }
 body{
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.5;
   color: #63696e;
   margin:0;
 
 }
+ ul {
+            list-style-type: square;
+            margin-left: 20px;
+        }
+  ul li{
+    margin:0 0 10px 0;
+    line-height: 1.3em;
+  }
 table {
   width: 100%;
   border-collapse: collapse;
@@ -72,52 +84,12 @@ table tr td:first-child {
   
     }*/
 
-.performance{
-    background-color: #FF9F1C;
-    
-  }
-
-.performance:hover{
-    background-color: #FF9F1C;
-  
-  }
-.predicted, .predicted:hover{
-    background-color: #FFBF69;
- 
-  }
-
-
-.intellectual, .intellectual:hover{
-  background-color: #CBF3F0;
-}
-.academic, .academic:hover{
-  background-color: #2EC4B6;
+p{
+  line-height: 1.5em;
 }
 
-.processing,.processing:hover{
-  background-color: #7EA16B;
-}
-.language,.language:hover{
-  background-color: #F29559;
-}
-.learning, .learning:hover{
-  background-color: #8F95D3;
-}
-.executive,.executive:hover{
-  background-color: #DBB1BC;
-}
-.perceptual,.perceptual:hover{
-  background-color: #D3C4E3;
-}
-.emotional,.emotional:hover{
-  background-color: #89DAFF;
-}
-.visuospatial,.visuospatial:hover{
-  background-color: #C3D898;
-}
-
-.attention,.attention:hover{
-  background-color: #F2D492;
+.float-container.about{
+  width:60%!important;
 }
 
 
@@ -131,7 +103,7 @@ table tr td:first-child {
     .header-table {
       position: sticky;
       top: 0;
-      background-color: #f2f2f2;
+      background-color: #FEB775;
     }
 
     /* Optional: Style for the content table */
@@ -145,7 +117,9 @@ table tr td:first-child {
       padding: 8px;
       text-align: left;
     }
-
+.content-table .domain, .content-table .domain:hover{
+ background-color: #BBE0E8;
+}
     /*form*/
     /* styles.css */
 
@@ -298,7 +272,7 @@ small {
     }
     main{
       margin:40px 20px 40px 20px;
-      min-height: 500px;
+      
     }
     footer{
 
@@ -351,13 +325,13 @@ small {
     }
 #findClient {
   margin:0 auto;
-  width:600px;
+  width:800px;
   display: block!important;
 
 }
 #findClient form{
 
-  padding:0;
+  padding:0 0 0 50px;
   margin:0;
 
 }
@@ -365,7 +339,7 @@ small {
 width:50%;
 }
 #findClient .testnum, #submitForm .testnum{
-  width:150px!important;
+  width:190px!important;
   float: left;
 }
 #findClient .testnum option{
@@ -376,7 +350,7 @@ width:50%;
   margin:25px 0 0 0;
 }
 #findClient #testnumsmall,#submitForm #testnumsmall{
-  width:110px;
+  width:150px;
   float:right;
   margin:7px 0 0 0;
 }
@@ -384,19 +358,27 @@ width:50%;
   width:110px;
 }
 
+#ClientResult thead{
+  color:white;
+
+  background-color: #6A5E44;
+
+}
 /*navigation*/
 #nav{
   float:right;
   margin:0;
 }
 #submitForm{
-  width:800px;
+ width: 1200px;
 }
 #submitForm .float-left{
-  width:90px;
+  width:130px;
 }
 #submitForm #clientid{
-  width:220px;
+  width:300px;
+  float:left;
+  margin:0 20px 0 0;
 }
 .readonly-input {
       color: #555; /* Text color for a disabled look */

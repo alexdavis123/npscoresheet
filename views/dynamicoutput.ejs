@@ -1,0 +1,52 @@
+
+
+
+  <h2><%= JSON.stringify(outputArray.Client).replace(/"/g, '') %> Result</h2>
+
+<table border="0" id="ClientResult" class="content-table">
+  <thead>
+    <tr>
+      <th>Measure</th>
+      <th>Subtest</th>
+      <th>Raw</th>
+      <th>T</th>
+      <th>Standard Score</th>
+      <th>Scaled Score</th>
+      <th>PR</th>
+      <th>Descriptor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% const domains = {}; %>
+
+    <% for (const domainKey in outputArray.TSS) { %>
+        <% const domainData = outputArray.TSS[domainKey]; %>
+        <% for (let i = 0; i < domainData.length; i++) { %>
+            <% const domain = domainData[i].Domain || domainKey; %>
+            <% const descriptorClass = domainData[i].Descriptor ? domainData[i].Descriptor.replace(/ /g, '-').toLowerCase() : ''; %>
+            <% if (!domains[domain]) { %>
+                <tr class="domain">
+                    <td colspan="8"><%= domain %></td>
+                </tr>
+                <% domains[domain] = true; %>
+            <% } %>
+            <tr class="<%= descriptorClass %>">
+                <td><%= i === 0 ? domainKey : '' %></td>
+                <td><%= domainData[i].Subtest %></td>
+                <td><%= domainData[i].Raw %></td>
+                <td><%= domainData[i].T %></td>
+                <td><%= domainData[i].StandardScore %></td>
+                <td><%= domainData[i].ScaledScore %></td>
+                <td><%= domainData[i].PR %></td>
+                <td><%= domainData[i].Descriptor %></td>
+            </tr>
+        <% } %>
+    <% } %>
+</tbody>
+
+</table>
+
+
+<button id="downloadExcel">Download Excel</button>
+
+<script src="/download-excel.js"></script>

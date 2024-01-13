@@ -7,13 +7,14 @@
       <th>DOMAINS</th>
       <th>MEASURE</th>
       <th>SUB TEST/NORM</th>
+      <th>RAW</th>
       <th>STANDARD</th>
       <th>SCALED</th>
       <th>T</th>
       <th>z</th>
       <th>PR</th>
       <th>DESCRIPTOR</th>
-      <th></th>
+      
       <th></th>
     </tr>
   </thead>
@@ -35,7 +36,7 @@
     </tr>
     <tr>
       <td></td>
-      <td></td>
+      <td>TOPF</td>
       <td></td>
       <td></td>
       <td></td>
@@ -127,6 +128,7 @@
               <td rowspan="<%= array.length %>">WAIS-DS</td>
             <% } %>
             <td><%= subtest.Subtest %></td>
+            <td><%= subtest.Raw %></td>
             <td><%= subtest.StandardScore %></td>
              <td><%= subtest.ScaledScore %></td>
             <td><%= subtest.T %></td>
@@ -134,7 +136,7 @@
             <td><%= subtest.PR %></td>
             <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
             <td></td>
-            <td></td>
+            
           </tr>
         <% }); %>
       <% } else { %>
@@ -214,30 +216,34 @@
       <td></td>
 
     </tr>
-   <% if (outputArray.TSS.TMTA && outputArray.TSS.TMTA.length > 0) { %>
-        <% outputArray.TSS.TMTA.forEach(function(subtest, index, array) { %>
-          <tr>
-           
+ <% if (outputArray.TSS['TMTA'] && outputArray.TSS['TMTA'].length > 0) { %>
+  <% outputArray.TSS['TMTA'].forEach(function(subtest, index, array) { %>
+    <tr>
       <td></td>
-            <% if (index === 0) { %>
-              <td rowspan="<%= array.length %>">TMT A</td>
-            <% } %>
-            <td><%= subtest.Subtest %></td>
-            <td><%= subtest.StandardScore %></td>
-             <td><%= subtest.ScaledScore %></td>
-            <td><%= subtest.T %></td>
-            <td><%= subtest.Z %></td>
-            <td><%= subtest.PR %></td>
-            <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
-            <td></td>
-            <td></td>
-          </tr>
-        <% }); %>
-      <% } else { %>
-        <tr>
-          <td colspan="5">No data available for BVMT-R</td>
-        </tr>
+      <% if (index === 0) { %>
+        <td rowspan="<%= array.length %>">TMTA</td>
       <% } %>
+      <td><%= subtest.Subtest %></td>
+      <td><%= subtest.StandardScore %></td>
+      <td><%= subtest.ScaledScore %></td>
+      <td><%= subtest.T %></td>
+      <td></td>
+      <td><%= subtest.PR %></td>
+      <% if (typeof subtest.Descriptor !== 'undefined') { %>
+        <td class="<%= subtest.Descriptor.replace(/ /g, '-').toLowerCase()%>"><%= subtest.Descriptor %></td>
+      <% } else { %>
+        <td></td>
+      <% } %>
+      <td></td>
+      <td></td>
+    </tr>
+  <% }); %>
+<% } else { %>
+  <tr>
+    <td colspan="5">No data available for TMTA</td>
+  </tr>
+<% } %>
+
     <tr class="">
       <td></td>
       <td></td>

@@ -33,6 +33,7 @@ app.use(databaseConnectionMiddleware);
 // const client = new MongoClient(uri);
 // const database = client.db('test');
 const database = getClient().db('test');
+const testnamesCollection = database.collection('testnames');
 const clients = database.collection('clients');
 const tombaughTMTA = database.collection('TombaughTMTA');
 const conversion = database.collection('conversion');
@@ -457,6 +458,30 @@ app.post('/submit', async (req, res) => {
   }
 });
 
+
+async function fetchLNames(testlst) {
+  try {
+console.log('test short names',testlst);
+
+
+
+    const lnamePromises = testlst.map(async (sname) => {
+      const result = await testnamesCollection.findOne({ SName: sname });
+      return result ? result.LName : null;
+    });
+
+    const lnames = await Promise.all(lnamePromises);
+
+    return lnames.filter((lname) => lname !== null);
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    //await client.close();
+  }
+}
+
+
+
 app.post('/process', async (req, res) => {
   console.log('post to process');
 
@@ -479,25 +504,52 @@ app.post('/process', async (req, res) => {
     const resultsTSS = await processTSSArray(resultData,clientId,testNum);
     const testlistArray  = Object.fromEntries( 
       Object.entries(resultsTSS ).map(([key, value]) => [key,value.filter(item => item.T !== null)]));
-    console.log('testlist',testlistArray);
+
+
+    // Get keys that are not empty
+const nonEmptyKeys = Object.keys(testlistArray).filter(key => {
+  const value = testlistArray[key];
+  return Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined;
+});
+
+let longNames={};
+
+await fetchLNames(nonEmptyKeys)
+  .then((lnames) => {
+
+    longNames=lnames;
+    console.log('Resulting LNames:', lnames);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+
    
     // Function to filter items with T not null
     const filterItemsWithTNotNull = (array) => array.filter(item => item.T !== null);
 
-    // Apply the function to each array in the data
-    const resultNotNull = {};
-    Object.entries(resultsTSS).forEach(([key, value]) => {
-      resultNotNull[key] = filterItemsWithTNotNull(value);
-    });
+ 
+// Apply the function to each array in the data
+const resultNotNull = Object.fromEntries(
+  Object.entries(resultsTSS).map(([key, value]) => [key, filterItemsWithTNotNull(value)])
+);
 
-   console.log('resultNotNull', resultNotNull);
+// Filter out keys with empty values
+const finalResult = Object.fromEntries(
+  Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
+);
+   console.log('resultNotNull', finalResult);
 
     // Format output
     let outputArray = {
       Client: clientId,
       ClientAge: result.Age,
-      TSS: resultNotNull,
+      TSS: finalResult,
+      TestList: longNames,
     };
+
+    console.log('ouputArray',outputArray);
 
     // Render the results
     res.render('dynamicoutput', { outputArray, title: 'Client Result' });

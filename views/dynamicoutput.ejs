@@ -3,6 +3,18 @@
 
   <h2><%= JSON.stringify(outputArray.Client).replace(/"/g, '') %> Result</h2>
 
+<h3> Tests Used </h3>
+
+<% if (outputArray.TestList && outputArray.TestList.length > 0) { %>
+   <ul>
+    <% outputArray.TestList.sort().forEach((test) => { %>
+      <li><%= test %></li>
+    <% }); %>
+  </ul>
+<% } else { %>
+  <p>No tests available.</p>
+<% } %>
+
 <table border="0" id="ClientResult" class="content-table">
   <thead>
     <tr>

@@ -1,12 +1,16 @@
 
 
- <div class="float-container">
-
+ <div class="float-container" id="landing">
+<div id="slogan">
+ <h1>Make reporting easier</h1>
+ <p>Say goodbye to the challenges of lengthy reports and hello to seamless, efficient writing with first of our tools - a score summary sheet generator</p>
+</div>
  <div id="findClient">
+
     <h2>Get Scoresheet</h2>
   <form  action="/process" method="post">
 
-   <p>If you have already entered client's data, you can find the result by entering the unique client ID</p>
+   <p>Already entered client's data? Find the result by entering the unique client ID</p>
   <div class="float-left">
     <label for="clientId">ClientID:</label>
     <input type="text" id="clientId" name="clientId" required>
@@ -23,9 +27,9 @@
 <small class="float-right" id="testnumsmall">1:first time testing<br> 2: second time testing</small>
     </div>
 
-    <div class="float-left button">
+    
     <button type="submit">Find</button>
-     </div>
+
   </form>
   </div>
   </div>

@@ -80,17 +80,22 @@
       <% for (let j = 0; j < insertdataArray[i].length; j++) { %>
         <td>
           <% if (j < 2) { %>
-            <input type="text" value="<%= insertdataArray[i][j] %>" readonly class="readonly-input" name="<%= (j === 0) ? 'Measure' : 'Subtest' %>" tabindex="<%= i * (insertdataArray[i].length - 2) + j + 1 %>">
+            <input type="text" value="<%= insertdataArray[i][j] %>" readonly class="readonly-input" name="<%= (j === 0) ? 'Measure' : 'Subtest' %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= '' %>" <% } %>>
+          <% } else if (j === 2) { %>
+            <input type="number" value="<%= insertdataArray[i][j] %>" name="Raw" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% } %>>
+          <% } else if (j === 3) { %>
+            <input type="number" value="<%= insertdataArray[i][j] %>" name="T" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% } %>>
           <% } else if (j === insertdataArray[i].length - 1) { %>
-            <input type="text" value="<%= insertdataArray[i][j] %>" name="Domain" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= i * (insertdataArray[i].length - 2) + j + 1 %>">
+            <input type="text" value="<%= insertdataArray[i][j] %>" name="Domain" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% } %>>
           <% } else { %>
-            <input type="<%= (j === 2 || j === 3 || j === 4 || j === 5) ? 'number' : 'text' %>" value="<%= insertdataArray[i][j] %>" name="<%= (j === 2) ? 'Raw' : (j === 3) ? 'T' : (j === 4) ? 'StandardScore' : (j === 5) ? 'ScaledScore' : '' %>" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= i * (insertdataArray[i].length - 2) + j + 1 %>">
+            <input type="<%= (j === 4 || j === 5) ? 'number' : 'text' %>" value="<%= insertdataArray[i][j] %>" name="<%= (j === 4) ? 'StandardScore' : (j === 5) ? 'ScaledScore' : '' %>" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 4 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 4 %>" <% } %>>
           <% } %>
         </td>
       <% } %>
     </tr>
   <% } %>
 </tbody>
+
 
 
 

@@ -7,16 +7,17 @@
 <h2>Enter Client Data</h2>
 <div class="" id="clientid">
 <label for="Name">ClientID:</label>
-<input type="text" id="name" name="Name" required><button type="button" id="generateBtn">Generate Random ID</button><br>
-
+<input type="text" id="name" name="Name" required><button type="button" id="generateBtn">Generate Random ID</button>
+<small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters or use the random id generator button</small>
 </div>
-<div class="float-left"</div>
+<div class="clear"></div>
+<div class="float-left">
 <label for="Sex">Sex</label>
 <select id="sex" name="Sex" required>
 <option value="M">M</option>
 <option value="F">F</option>
 </select>
-<small>Assigned at birth</small>
+
 </div>
 <div class="float-left">
 <label for="Age">Age:</label>
@@ -26,7 +27,7 @@
 
 <label for="Education">Education:</label>
 <input type="number" id="education" name="Education" required>
-<small>Years of education</small>
+
 </div>
 <div class="float-left">
 
@@ -46,12 +47,20 @@
 <option value="1">1</option>
 <option value="2">2</option>
 </select>
-<small id="testnumsmall">If this is the first time testing, choose 1. This will be used to calculate RCI.</small>
+<small id="testnumsmall">1: first time; This will be used to calculate RCI.</small>
 </div>
 <div class="clear"></div>
-<small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters or use the random id generator button</small><br>
+
+<div class="extractpdf">
+<lable for="bvmtrpdf"> Extract from BVMT-R PDF report</lable>
+<div class="clear"></div>
+<input type="file" name="bvmtrpdf" id="pdfInput" accept=".pdf">
+<button onclick="processPDF()">Extract Tables from Page 3</button>
+</div>
+<div class="clear"></div>
 <p> Note: If the test allows for both input of RAW and T score, T score MUST be entered to generate the score sheet. RAW score alone will not be converted to T score</p>
 <p> Tip: you can press TAB key to navigate down the input fields</p>
+
 <table id="dataTable">
 <thead>
 <tr>
@@ -94,4 +103,8 @@
 </form>
 
 <script src="/submitform.js"></script>
+<script src="/pdf.min.js"></script>
+
+<script src="/pdf.worker.min.js"></script>
+<script src="/processpdf.js"></script>
 

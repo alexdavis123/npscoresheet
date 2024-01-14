@@ -89,7 +89,7 @@ table tr td:first-child {
     }
 
     .float-container.about{
-      width:60%!important;
+      
     }
     .float-container#landing{
      background-image: url('/img/4436053.jpg');
@@ -188,7 +188,7 @@ label {
 
 /* Style for input and select fields */
 input, select {
-
+font-size: 16px;
   padding: 8px;
   margin: 5px 0 0 0;
   display: inline-block;
@@ -198,7 +198,7 @@ input, select {
 .float-container {
   width: 100%;
   overflow: hidden; /* This is essential for clearing floats */
-
+padding:0 0 0 30px;
   margin:0 auto;
 }
 
@@ -274,7 +274,7 @@ header {
 main{
   margin:0px 20px 40px 20px;
 
-  height:100vh; 
+  min-height:100vh; 
 
 }
 footer{
@@ -389,6 +389,16 @@ header h1{
   #findClient .float-left.age{
     width:110px;
   }
+.extractpdf{
+ 
+}
+
+.extractpdf input,.extractpdf button{
+  width:30%;
+  float:left;
+  margin-right: 10px;
+}
+
 
   #ClientResult thead{
     color:white;
@@ -407,10 +417,24 @@ header h1{
 #submitForm .float-left{
   width:130px;
 }
-#submitForm #clientid{
-  width:300px;
+
+#submitForm #clientid input{
   float:left;
-  margin:0 20px 0 0;
+  width:30%;
+}
+#submitForm #clientid button{
+float:left;
+  width:20%;
+  margin:0 0 0 10px;
+}
+#submitForm #clientid small{
+float:left;
+  width:45%;
+  margin:0 0 0 10px;
+}
+#saveForm{
+  margin:0 auto;
+  display: block;
 }
 .readonly-input {
   color: #555; /* Text color for a disabled look */

@@ -62,6 +62,9 @@ app.get('/', (req, res) => {
   res.render('index', { title: 'Home Page'});
 });
 
+app.get('/uploadpdf', (req, res) => {
+  res.render('uploadpdf.ejs', { title: 'Process PDF'});
+});
 
 const insertdataArray = [
   ["BVMT-R", "Trial 1","","","readonly","readonly","Memory"],
@@ -86,13 +89,13 @@ const insertdataArray = [
   ["TMTB", "","readonly","","readonly","readonly","Executive"],
   ["NAB", "Naming","readonly","","readonly","readonly","Language"],
   ["FAS", "","readonly","","readonly","readonly","Language"],
-  ["Animal", "","readonly","","readonly","readonly","Language"],
+  ["ANT", "","readonly","","readonly","readonly","Language"],
   ["WCST", "Total Errors","readonly","readonly","","readonly","Executive"],
   ["WCST", "Perseverative Responses","readonly","readonly","","readonly","Executive"],
   ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive"],
   ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive"],
   ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive"],
-];
+  ];
 
 
 
@@ -106,8 +109,6 @@ app.get('/insert', (req, res) => {
 
 // Middleware to connect to the database
 app.use(databaseConnectionMiddleware);
-
-
 
 
 async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) {
@@ -409,20 +410,20 @@ async function calculateTMTAZAndResult(clientId, testNum, tombaughTMTA, conversi
 
 
 const submissionSchema = new mongoose.Schema({
-      Name: String,
-      Sex: String,
-      Age: Number,
-      Education: Number,
-      Race: String,
-      TestNum: Number,
-      Measure: String,
-      Subtest: String,
-      Raw: Number,
-      T: Number,
-      StandardScore: Number,
-      ScaledScore: Number,
-      Domain: String,
-    });
+  Name: String,
+  Sex: String,
+  Age: Number,
+  Education: Number,
+  Race: String,
+  TestNum: Number,
+  Measure: String,
+  Subtest: String,
+  Raw: Number,
+  T: Number,
+  StandardScore: Number,
+  ScaledScore: Number,
+  Domain: String,
+});
 const Submission = mongoose.model('Submission', submissionSchema, 'clients');
 //Submission.create(dataToInsert);
 
@@ -433,7 +434,7 @@ app.post('/submit', async (req, res) => {
     //await connectToDatabase(); 
     // const uri = 'mongodb://localhost:27017/test';
     // mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    
+
     console.log('sumission sch',Submission);
   // Extract common fields from the request body
     const { Name, Sex, Education, Age, Race, TestNum} = req.body;
@@ -461,7 +462,7 @@ app.post('/submit', async (req, res) => {
 
 async function fetchLNames(testlst) {
   try {
-console.log('test short names',testlst);
+    console.log('test short names',testlst);
 
 
 
@@ -507,39 +508,39 @@ app.post('/process', async (req, res) => {
 
 
     // Get keys that are not empty
-const nonEmptyKeys = Object.keys(testlistArray).filter(key => {
-  const value = testlistArray[key];
-  return Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined;
-});
+    const nonEmptyKeys = Object.keys(testlistArray).filter(key => {
+      const value = testlistArray[key];
+      return Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined;
+    });
 
-let longNames={};
+    let longNames={};
 
-await fetchLNames(nonEmptyKeys)
-  .then((lnames) => {
+    await fetchLNames(nonEmptyKeys)
+    .then((lnames) => {
 
-    longNames=lnames;
-    console.log('Resulting LNames:', lnames);
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+      longNames=lnames;
+      console.log('Resulting LNames:', lnames);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
 
-   
+
     // Function to filter items with T not null
     const filterItemsWithTNotNull = (array) => array.filter(item => item.T !== null);
 
- 
+
 // Apply the function to each array in the data
-const resultNotNull = Object.fromEntries(
-  Object.entries(resultsTSS).map(([key, value]) => [key, filterItemsWithTNotNull(value)])
-);
+    const resultNotNull = Object.fromEntries(
+      Object.entries(resultsTSS).map(([key, value]) => [key, filterItemsWithTNotNull(value)])
+      );
 
 // Filter out keys with empty values
-const finalResult = Object.fromEntries(
-  Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
-);
-   console.log('resultNotNull', finalResult);
+    const finalResult = Object.fromEntries(
+      Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
+      );
+    console.log('resultNotNull', finalResult);
 
     // Format output
     let outputArray = {
@@ -566,16 +567,16 @@ const finalResult = Object.fromEntries(
 app.post('/processrci', async (req, res) => {
   console.log('post to rci process');
 
-   try {
-        const clientId = req.body.clientid;
-        const age = req.body.age;
-        console.log('req',clientId,age);
-        const rcisArray = await getRCIs(clientId, age);
-        const outputArray = rcisArray.map(item => ({ ...item, client: clientId }));
-        console.log('ouputArray at processrci',outputArray);
-        res.render('rcioutput', { outputArray, title: 'RCI Result'});
+  try {
+    const clientId = req.body.clientid;
+    const age = req.body.age;
+    console.log('req',clientId,age);
+    const rcisArray = await getRCIs(clientId, age);
+    const outputArray = rcisArray.map(item => ({ ...item, client: clientId }));
+    console.log('ouputArray at processrci',outputArray);
+    res.render('rcioutput', { outputArray, title: 'RCI Result'});
 
-   } catch (error) {
+  } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');
   } finally {

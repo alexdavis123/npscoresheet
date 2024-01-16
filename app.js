@@ -1,13 +1,12 @@
 
+const port = 3000;
 const express = require('express');
 const ejs = require('ejs');
-const { MongoClient } = require('mongodb');
+//const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
 const app = express();
-const port = 3000;
+
 const { databaseConnectionMiddleware, closeConnection, getDatabase, getClient } = require('./db');
-
-
 
 const expressLayouts = require('express-ejs-layouts');
 const bodyParser = require('body-parser');
@@ -589,6 +588,11 @@ app.post('/processrci', async (req, res) => {
 process.on('exit', closeConnection);
 
 // Start the server
+// app.listen(port, () => {
+//   console.log(`Server is running at http://localhost:${port}`);
+// });
+
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });

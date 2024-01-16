@@ -96,8 +96,6 @@ const insertdataArray = [
   ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive"],
   ];
 
-
-
 app.get('/insert', (req, res) => {
   res.render('dynamicinsert', { insertdataArray,title:'dynamicinsert'});
 });

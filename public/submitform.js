@@ -3,6 +3,13 @@
 
     const rowsData = [];
 
+$('#extractpdf').click(function (event) {
+
+event.preventDefault(); 
+});
+
+
+
     $('#saveForm').click(function () {
       //console.log('clicked',$('#name').val());
      // alert('clicked'+$('#name').val());

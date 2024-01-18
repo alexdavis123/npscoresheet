@@ -1,7 +1,8 @@
 //const uri = process.env.MONGODB_URI;
 const port = process.env.PORT || 3000;
 
-const port = 3000;
+
+//const port = 3000;
 const express = require('express');
 const ejs = require('ejs');
 //const { MongoClient } = require('mongodb');
@@ -119,12 +120,10 @@ const insertdataArray = [
   ];
 
 app.get('/insert', (req, res) => {
-  res.render('dynamicinsert', { insertdataArray,title:'dynamicinsert'});
+  res.render('dynamicinsert', { insertdataArray,title:'Enter Data'});
 });
 
-// app.get('/insert', (req, res) => {
-//   res.render('dynamicinsert', { title: 'Submit Data'});
-// });
+
 
 // Middleware to connect to the database
 app.use(databaseConnectionMiddleware);
@@ -693,3 +692,4 @@ process.on('exit', closeConnection);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+

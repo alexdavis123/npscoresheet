@@ -1,26 +1,97 @@
 
+<div class="float-container">
+ <div class="float-right">
 
- <div class="float-container">
+ <h3>Locating SEM Information</h3>
+<p>To access the Standard Error of Measurement (SEM), refer to the technical manual of the test. Locate the appropriate SEM values categorized by age, specifically during the initial testing session.</p>
+
+
+  <h3>OR Calculate SEM from Mean and SD</h3>
+
+  <p>Enter the values below to calculate SEM:</p>
+
+  <label for="mean">Mean:</label>
+  <input type="number" id="mean" step="any">
+
+  <label for="sd">Standard Deviation:</label>
+  <input type="number" id="sd" step="any">
+
+  <label for="n">Sample Size (N):</label>
+  <input type="number" id="n" step="1">
+
+  <button onclick="calculateSEM()">Calculate SEM</button>
+
+  <h3 id="result"></h3>
+
+<h3>Calculation of RCI</h3>
+  <p>The Reliable Change Index (RCI) is calculated using the following formula:</p>
+  <pre>
+    RCI = (X<sub>Post</sub> - X<sub>Pre</sub>) / SEM
+  </pre>
+  <p>Where:</p>
+  <ul>
+    <li><strong>X<sub>Post</sub></strong> is the post-assessment score.</li>
+    <li><strong>X<sub>Pre</sub></strong> is the pre-assessment score.</li>
+    <li><strong>SEM</strong> is the Standard Error of Measurement.</li>
+  </ul>
+  <p>The result of this calculation gives an indication of whether the observed change between the pre-assessment and post-assessment scores is statistically significant. Generally, if the RCI value exceeds a certain threshold (often ±1.96 or ±1.645 for a desired level of significance), it suggests a reliable and meaningful change in the individual's scores over time.</p>
+
+   </div>
 
  <div id="findClient">
   <form  action="/processrci" method="post">
    <h2>Get Client's RCI</h2>
-  <div class="float-left">
+  <div class="">
     <label for="clientId">ClientID:</label>
     <input type="text" id="clientId" name="clientid" required>
     <small>the unique client ID you used when entering data</small>
 
     </div>
-     <div class="float-left age">
+     <!-----div class="float-left age">
     <label for="Age">Age:</label>
     <input type="number" id="age" name="age" required>
     <small>Age at test number 1 </small>
-    </div>
+    </div----->
 
-    <div class="float-left button">
-    <button type="submit">Find</button>
+
+<table>
+  <tr>
+    <th>Measure</th>
+    <th>Subtest</th>
+    <th>SEM</th>
+  </tr>
+  <% const semData = []; %>
+  <% for (let i = 0; i < getSEMArray.length; i++) { %>
+    <tr>
+      <% const row = {}; %>
+      <% for (let j = 0; j < getSEMArray[i].length; j++) { %>
+        <td>
+          <% if (j === 0 || j === 1) { %>
+            <input type="text" value="<%= getSEMArray[i][j] %>" readonly class="readonly-input" name="<%= getSEMArray[i][0]%>" tabindex="<%= i * getSEMArray[i].length + j + 1 %>">
+            <% row[getSEMArray[i][0]] = getSEMArray[i][j]; %>
+          <% } else if (j === 2) { %>
+            <input type="number" step="any" value="<%= getSEMArray[i][j] %>" name="<%= getSEMArray[i][0]%>" tabindex="<%= i * getSEMArray[i].length + j + 1 %>">
+            <% row['SEM'] = getSEMArray[i][j]; %>
+          <% } else { %>
+            <%= getSEMArray[i][j] %>
+          <% } %>
+        </td>
+      <% } %>
+      <% semData.push(row); %>
+    </tr>
+  <% } %>
+</table>
+
+
+
+
+
+    <div class="button">
+    <button type="submit">Submit</button>
      </div>
   </form>
   </div>
-  </div>
+</div>
   <div class="clear"></div>
+
+  <script src="/calcsem.js"></script>

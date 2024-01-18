@@ -1,6 +1,7 @@
  
- <h2><%= outputArray[0].client %>'s score comparison and RCI</h2>
- <div class="float-container">
+  <div class="float-container">
+ <h2><%= clientId %>'s score comparison and RCI</h2>
+
  <% if (outputArray.length === 0) { %>
     <p>No data available</p>
   <% } else { %>
@@ -25,7 +26,7 @@
       <% } %>
     </table>
   <% } %>
-  </div>
+  
 <h3>RCI Critical Values</h3>
 
 <table border="1">
@@ -54,5 +55,5 @@
     <td>1st percentile</td>
   </tr>
 </table>
-
+</div>
   <div class="clear"></div>

@@ -17,6 +17,9 @@ body{
   margin:0;
 
 }
+a{
+  color: #ef7e67;
+}
 ul {
   list-style-type: square;
   margin-left: 20px;
@@ -196,9 +199,9 @@ font-size: 16px;
   box-sizing: border-box;
 }
 .float-container {
-  width: 100%;
+  width: 90%;
   overflow: hidden; /* This is essential for clearing floats */
-padding:0 0 0 30px;
+
   margin:0 auto;
 }
 
@@ -211,7 +214,7 @@ padding:0 0 0 30px;
 
 .float-right {
   float: right;
-
+width:45%;
 
   box-sizing: border-box;
 }
@@ -368,7 +371,7 @@ header h1{
 
   }
   #findClient .float-left{
-    width:50%;
+    width:80%;
   }
   #findClient .testnum, #submitForm .testnum{
     width:190px!important;
@@ -377,9 +380,10 @@ header h1{
   #findClient .testnum option{
 
   }
-  #findClient  .button{
-    width:100px;
-    margin:25px 0 0 0;
+  #findClient  .button button{
+  margin:0 auto;
+  width: 100%;
+  display: block;
   }
   #findClient #testnumsmall,#submitForm #testnumsmall{
     width:150px;

@@ -91,7 +91,7 @@ const insertdataArray = [
   ["BVMT-R", "Trial 3","","","readonly","readonly", "Memory"],
   ["BVMT-R", "Total","","","readonly","readonly", "Memory"],
   ["BVMT-R", "Learning","","","readonly","readonly", "Memory"],
-  ["BVMT-R", "DR","readonly","","readonly","readonly","Memory"],
+  ["BVMT-R", "DR","","","readonly","readonly","Memory"],
   ["BVMT-R", "Copy","","readonly","readonly","readonly","Visuospatial"],
   ["HVLT-R", "Trial 1","","","readonly","readonly","Memory"],
   ["HVLT-R", "Trial 2","","","readonly","readonly","Memory"],

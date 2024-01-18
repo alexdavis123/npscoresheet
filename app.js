@@ -117,12 +117,10 @@ const insertdataArray = [
   ];
 
 app.get('/insert', (req, res) => {
-  res.render('dynamicinsert', { insertdataArray,title:'dynamicinsert'});
+  res.render('dynamicinsert', { insertdataArray,title:'Enter Data'});
 });
 
-// app.get('/insert', (req, res) => {
-//   res.render('dynamicinsert', { title: 'Submit Data'});
-// });
+
 
 // Middleware to connect to the database
 app.use(databaseConnectionMiddleware);

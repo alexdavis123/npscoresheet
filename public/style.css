@@ -181,6 +181,7 @@ h1 {
 }
 h2{
   text-align: left;
+  margin:20px 0 0 0;
 }
 
 /* Style for labels */
@@ -304,49 +305,50 @@ header h1{
   width: 80%;
 }
   a#sitename{
-    margin:20px 0 0 45px;
-    padding:15px;
-    color: #074978;
+    margin:15px 0 0 15px;
+    padding:0px;
+   float: left;
     text-decoration: none; /* This removes the underline */
     background-image: url(/img/logo.png);
     background-size: 100% auto;
     background-repeat: no-repeat;
     width:200px;
-    height: 50px;
+    height: 45px;
     display: block;
   }
 
-  a#sitename:visited {
-    color: #074978;
-    text-decoration: none; /* This removes the underline */
-
-  }
+  
 
   nav {
-    display: flex;
+    display: block;
     justify-content: flex-end; 
     background-color:#ef7e67;
     text-align: center; 
     width: 100%;
-    padding:0 40px 0 0 ;
+    height:50px;
+    padding:0 40px;
   }
   nav ul {
     list-style: none;
-    margin: 0 40px 0 0;
-    padding: 10px;
-    display: flex;
-    justify-content: center; /* Center the list items horizontally */
-    align-items: center; /* Center the list items vertically */
-    height: 100%; /* Ensure the list takes the full height of the nav */
+   width:40%;
+   height:20px;
+   float:right;
+    display: block;
+    justify-content: right; /* Center the list items horizontally */
+    align-items: right; /* Center the list items vertically */
+    
   }
 
-  nav li {
-    margin: 0 10px; /* Adjust spacing between list items if needed */
+  nav ul li {
+    margin: 12px 10px 0 0;
+    float:left;
+    /* Adjust spacing between list items if needed */
   }
   nav a {
     color: #fff;
     text-decoration: none;
-    padding:8px;
+
+    padding:8px 10px;
     text-align: center; 
     margin: 0px;
     font-weight: bold;
@@ -354,7 +356,8 @@ header h1{
   }
 
   nav a:hover {
-    color: #293f47;
+    color: #fff;
+    background-color: #111;
 
   }
   #findClient {
@@ -416,10 +419,10 @@ header h1{
   margin:0;
 }
 #submitForm{
- width: 1200px;
+ width: 90%;
 }
 #submitForm .float-left{
-  width:130px;
+  width:70%;
 }
 
 #submitForm #clientid input{

@@ -1,6 +1,7 @@
 // const { MongoClient } = require('mongodb');
-
 // const uri = 'mongodb://localhost:27017/test';
+//const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 // Middleware to use the layout
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
@@ -13,7 +14,7 @@ const client = new MongoClient(uri, {
   }
 });
 
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 let database;
 
 async function connectToDatabase() {

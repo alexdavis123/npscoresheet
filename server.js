@@ -111,11 +111,11 @@ const insertdataArray = [
   ["NAB", "Naming","readonly","","readonly","readonly","Language"],
   ["COWAT", "","readonly","","readonly","readonly","Language"],
   ["ANT", "","readonly","","readonly","readonly","Language"],
-  ["WCST", "Total Errors","readonly","readonly","","readonly","Executive"],
-  ["WCST", "Perseverative Responses","readonly","readonly","","readonly","Executive"],
-  ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive"],
-  ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive"],
-  ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive"],
+  ["WCST", "Total Errors","readonly","readonly","","readonly","Executive Function"],
+  ["WCST", "Perseverative Responses","readonly","readonly","","readonly","Executive Function"],
+  ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive Function"],
+  ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive Function"],
+  ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive Function"],
   ["ROCF", "","readonly","","readonly","readonly","Visuospatial"],
   ];
 
@@ -217,48 +217,6 @@ async function getRCIs(clientid,measure,subtest,sem) {
 
   return rcisArray;
 
-
-  // try {
-  //  // await connectToDatabase(); 
-  //   //const query = { age: 79 };
-  //   //const semRows = await waisem.find({ age: Number(age) }).toArray();
-
-  //   console.log('client id',clientid);
-
-  //   compareScores = await getCOMPAREScores(clientid, 1, 'Total', 'WAIS-DS','ScaledScore');
-
-
-
-
-  //   // for (const row of semRows) {
-  //   //   const test = row.test;
-  //   //   const sem = row.sem;
-
-  //   //   let compareScores;
-  //   //   if (test === 'DS') {
-  //   //     const sedDS = 1.96 * Math.sqrt(2 * sem ** 2);
-  //   //     compareScores = await getCOMPAREScores(clientid, 1, 'Total', 'WAIS-DS','ScaledScore');
-  //   //     const rciDS = (compareScores.score2 - compareScores.score1)/sedDS;
-  //   //     console.log('compareScores',compareScores);
-
-  //   //     rcisArray.push({ measure:'WAIS-DS',subtest: 'Total', ...compareScores, diff: compareScores.score2 - compareScores.score1, sed: sedDS, rci: rciDS });
-  //   //   } else if (test === 'DSF') {
-  //   //     const sedDSF = 1.96 * Math.sqrt(2 * sem ** 2);
-  //   //     compareScores = await getCOMPAREScores(clientid, 1, 'DSF', 'WAIS-DS','ScaledScore');
-  //   //     const rciDSF = (compareScores.score2 - compareScores.score1)/sedDSF;
-  //   //     console.log('compareScores',compareScores);
-
-  //   //     rcisArray.push({ measure: 'WAIS-DS', subtest: 'DSF', ...compareScores, diff: compareScores.score2 - compareScores.score1, sed: sedDSF, rci:rciDSF });
-  //   //   }
-  //   // }
-  //   console.log('rcisArray at getRCIs',rcisArray);
-  //   return rcisArray;
-
-  // } catch (error) {
-  //   console.error('Error connecting to MongoDB:', error);
-  // } finally {
-  //   //await client.close();
-  // }
 }
 
 
@@ -291,7 +249,7 @@ async function rearrangeData(query) {
       },
       ]).toArray();
 
-    console.log('Rearranged data:', rearrangedData);
+   // console.log('Rearranged data:', rearrangedData);
 
     return rearrangedData;
   } catch (error) {
@@ -330,7 +288,7 @@ async function getUniqueMeasureNames(query) {
     // Use distinct on the array to get unique measure names
     const uniqueMeasureNames = [...new Set(resultArray.map(item => item.Measure))];
 
-    console.log('Unique Measure Names:', uniqueMeasureNames);
+   // console.log('Unique Measure Names:', uniqueMeasureNames);
     return uniqueMeasureNames;
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
@@ -345,7 +303,7 @@ async function getUniqueMeasureNames(query) {
 async function processTSSArray(resultInputArray,clientId,testNum) {
  // const resultsArray = [];
   //await connectToDatabase(); // Ensure the connection is established
-  console.log('resultinputarray',resultInputArray);
+  //console.log('resultinputarray',resultInputArray);
   const inputObject=resultInputArray;
 
   try {
@@ -355,16 +313,16 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
 
     // Iterate through each subtest within the measure
       for (const subtest of subtests) {
-        console.log(`Measure: ${measureName}, Subtest: ${subtest.Subtest}`);
+       // console.log(`Measure: ${measureName}, Subtest: ${subtest.Subtest}`);
 
       // Access other properties based on the subtest type
         if (subtest.T) {
-          console.log('subtest T',subtest.T);
+        //  console.log('subtest T',subtest.T);
           const queryConversionT = { T: subtest.T};
           try {
           //await connectToDatabase();
             const resultConversionT = await conversion.findOne(queryConversionT);
-            console.log('result conversion T',resultConversionT);
+          //  console.log('result conversion T',resultConversionT);
 
             subtest.PR = resultConversionT.PR;
             subtest.Descriptor = resultConversionT.Descriptor;
@@ -376,7 +334,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           }
         }
         if (subtest.Raw) {
-          console.log(`Raw: ${subtest.Raw}`);
+         // console.log(`Raw: ${subtest.Raw}`);
           // const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
           //   clientId,
           //   testNum,
@@ -387,15 +345,20 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           // subtest.Z= resultConversionZ[0].Z;
           // subtest.T= resultConversionZ[0].T;
           // console.log('convert Z',resultConversionZ[0]);
+          const queryConversion = { Raw: subtest.Raw};
+          subtest.PR = "";
+          subtest.Descriptor = "None";
+          subtest.Z= "";
+          subtest.T= "";
 
         }
         if (subtest.StandardScore) {
-          console.log(`StandardScore: ${subtest.StandardScore}`);
+         // console.log(`StandardScore: ${subtest.StandardScore}`);
           const queryConversion = { StandardScore: subtest.StandardScore};
           try {
           //await connectToDatabase();
             const resultConversion = await conversion.findOne(queryConversion);
-            console.log('result conversion StandardScore',resultConversion);
+          //  console.log('result conversion StandardScore',resultConversion);
             subtest.T = resultConversion.T;
             subtest.PR = resultConversion.PR;
             subtest.Descriptor = resultConversion.Descriptor;
@@ -408,12 +371,12 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
 
         }
         if (subtest.ScaledScore) {
-          console.log(`ScaledScore: ${subtest.ScaledScore}`);
+         // console.log(`ScaledScore: ${subtest.ScaledScore}`);
           const queryConversion = { ScaledScore: subtest.ScaledScore};
           try {
           //await connectToDatabase();
             const resultConversion = await conversion.findOne(queryConversion);
-            console.log('result conversion ScaledScore',resultConversion);
+           // console.log('result conversion ScaledScore',resultConversion);
             subtest.T = resultConversion.T;
             subtest.PR = resultConversion.PR;
             subtest.Descriptor = resultConversion.Descriptor;
@@ -504,8 +467,6 @@ async function calculateResultConversionZ(conversion, calculateTMTAZ) {
 //   }
 // }
 
-
-
 const submissionSchema = new mongoose.Schema({
   Name: String,
   Sex: String,
@@ -526,7 +487,7 @@ const Submission = mongoose.model('Submission', submissionSchema, 'clients');
 
 // Handle form submission
 app.post('/submit', async (req, res) => {
- console.log('Received form data:', req.body);
+ //console.log('Received form data:', req.body);
   try {
     //await connectToDatabase(); 
    const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
@@ -579,7 +540,7 @@ async function fetchLNames(testlst) {
 
 
 app.post('/process', async (req, res) => {
-  console.log('post to process');
+  //console.log('post to process');
 
   try {
     const clientId = req.body.clientId;
@@ -635,7 +596,7 @@ app.post('/process', async (req, res) => {
     const finalResult = Object.fromEntries(
       Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
       );
-    console.log('resultNotNull', finalResult);
+    //console.log('resultNotNull', finalResult);
 
     // Format output
     let outputArray = {
@@ -645,7 +606,7 @@ app.post('/process', async (req, res) => {
       TestList: longNames,
     };
 
-    console.log('ouputArray',outputArray);
+   // console.log('ouputArray',outputArray);
 
     // Render the results
     res.render('dynamicoutput', { outputArray, title: 'Client Result' });
@@ -660,7 +621,7 @@ app.post('/process', async (req, res) => {
 
 
 app.post('/processrci', async (req, res) => {
-  console.log('post to rci process');
+  //console.log('post to rci process');
 
   try {
     const clientId = req.body.clientid;
@@ -689,7 +650,7 @@ app.post('/processrci', async (req, res) => {
 
     for (const row of rowsWithSemNotNull) {
       const rcis = await getRCIs(clientId, row.measure,row.subtest,row.sem);
-      console.log('rcis',rcis)
+     // console.log('rcis',rcis)
       rcisArray.push({ rcis });
     }
 

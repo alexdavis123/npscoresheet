@@ -599,17 +599,41 @@ app.post('/process', async (req, res) => {
     //console.log('resultNotNull', finalResult);
 
     // Format output
+    // Format output
     let outputArray = {
       Client: clientId,
-      ClientAge: result.Age,
-      TSS: finalResult,
+     // ClientAge: result.Age,
+     // TSS: finalResult,
       TestList: longNames,
     };
 
-   // console.log('ouputArray',outputArray);
+   const flatArray = [];
+
+for (const measure in finalResult) {
+  const subtests = finalResult[measure];
+  for (const subtest of subtests) {
+    flatArray.push({
+      Measure: measure,
+      ...subtest
+    });
+  }
+}
+
+//console.log(flatArray);
+
+
+
+const rearrangedByDomain = flatArray.reduce((result, item) => {
+  const domain = item.Domain;
+  if (!result[domain]) {
+    result[domain] = [];
+  }
+  result[domain].push(item);
+  return result;
+}, {});
 
     // Render the results
-    res.render('dynamicoutput', { outputArray, title: 'Client Result' });
+       res.render('dynamicoutput', { outputArray,rearrangedByDomain, title: 'Client Result' });
   } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');

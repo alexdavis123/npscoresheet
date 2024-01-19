@@ -29,31 +29,40 @@
     </tr>
   </thead>
   <tbody>
-    <% const domains = {}; %>
-
-    <% for (const domainKey in outputArray.TSS) { %>
-        <% const domainData = outputArray.TSS[domainKey]; %>
-        <% for (let i = 0; i < domainData.length; i++) { %>
-            <% const domain = domainData[i].Domain || domainKey; %>
-            <% const descriptorClass = domainData[i].Descriptor ? domainData[i].Descriptor.replace(/ /g, '-').toLowerCase() : ''; %>
-            <% if (!domains[domain]) { %>
-                <tr class="domain">
-                    <td colspan="8"><%= domain %></td>
-                </tr>
-                <% domains[domain] = true; %>
-            <% } %>
-            <tr class="<%= descriptorClass %>">
-                <td><%= i === 0 ? domainKey : '' %></td>
-                <td><%= domainData[i].Subtest %></td>
-                <td><%= domainData[i].Raw %></td>
-                <td><%= domainData[i].T %></td>
-                <td><%= domainData[i].StandardScore %></td>
-                <td><%= domainData[i].ScaledScore %></td>
-                <td><%= domainData[i].PR %></td>
-                <td><%= domainData[i].Descriptor %></td>
-            </tr>
+   <% for (const domain in rearrangedByDomain) { %>
+      <tr class="domain">
+        <td colspan="8"><strong><%= domain %></strong></td>
+      </tr>
+      <% const items = rearrangedByDomain[domain]; %>
+      <% let lastMeasure = null; %>
+      <% for (const item of items) { %>
+        <% if (item.Measure !== lastMeasure) { %>
+          <tr class="<%= item.Descriptor.replace(/ /g, '-').toLowerCase() %>">
+            <td><%= item.Measure %></td>
+            <td><%= item.Subtest %></td>
+            <td><%= item.Raw %></td>
+            <td><%= item.T %></td>
+            <td><%= item.StandardScore %></td>
+            <td><%= item.ScaledScore %></td>
+            <td><%= item.PR %></td>
+            <td><%= item.Descriptor %></td>
+          </tr>
+          <% lastMeasure = item.Measure; %>
+        <% } else { %>
+          <tr class="<%= item.Descriptor.replace(/ /g, '-').toLowerCase() %>">
+            <td></td> <!-- Leave Measure column empty for repeated Measure in the same domain -->
+            <td><%= item.Subtest %></td>
+            <td><%= item.Raw %></td>
+            <td><%= item.T %></td>
+            <td><%= item.StandardScore %></td>
+            <td><%= item.ScaledScore %></td>
+            <td><%= item.PR %></td>
+            <td><%= item.Descriptor %></td>
+          </tr>
         <% } %>
+      <% } %>
     <% } %>
+
 </tbody>
 
 </table>

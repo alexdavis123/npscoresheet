@@ -104,7 +104,7 @@ const insertdataArray = [
   ["WAIS-DS", "DSB","readonly","readonly","readonly","","Attention"],
   ["WAIS-DS", "DSS","readonly","readonly","readonly","","Attention"],
   ["TMTA", "","readonly","","readonly","readonly","Processing Speed"],
-  ["TMTB", "","readonly","","readonly","readonly","Executive"],
+  ["TMTB", "","readonly","","readonly","readonly","Executive Function"],
   ["NAB", "Naming","readonly","","readonly","readonly","Language"],
   ["COWAT", "","readonly","","readonly","readonly","Language"],
   ["ANT", "","readonly","","readonly","readonly","Language"],
@@ -325,7 +325,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
             console.error('Error querying conversion:', error);
           }
         }
-        if (subtest.Raw) {
+        if (subtest.Raw && !subtest.T && !subtest.ScaledScore && !subtest.StandardScore) {
           console.log(`Raw: ${subtest.Raw}`);
           // const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
           //   clientId,
@@ -590,20 +590,47 @@ app.post('/process', async (req, res) => {
     const finalResult = Object.fromEntries(
       Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
       );
-   // console.log('resultNotNull', finalResult);
+    console.log('resultNotNull', finalResult);
 
     // Format output
     let outputArray = {
       Client: clientId,
      // ClientAge: result.Age,
-      TSS: finalResult,
+     // TSS: finalResult,
       TestList: longNames,
     };
+
+   const flatArray = [];
+
+for (const measure in finalResult) {
+  const subtests = finalResult[measure];
+  for (const subtest of subtests) {
+    flatArray.push({
+      Measure: measure,
+      ...subtest
+    });
+  }
+}
+
+console.log(flatArray);
+
+
+
+const rearrangedByDomain = flatArray.reduce((result, item) => {
+  const domain = item.Domain;
+  if (!result[domain]) {
+    result[domain] = [];
+  }
+  result[domain].push(item);
+  return result;
+}, {});
+
+console.log(rearrangedByDomain);
 
     console.log('ouputArray',outputArray);
 
     // Render the results
-    res.render('dynamicoutput', { outputArray, title: 'Client Result' });
+    res.render('dynamicoutput', { outputArray,rearrangedByDomain, title: 'Client Result' });
   } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');

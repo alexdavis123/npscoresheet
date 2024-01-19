@@ -128,8 +128,37 @@ app.use(databaseConnectionMiddleware);
 
 async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) {
   // Fetch scores from the database
-  const compareNum1 = await clients.findOne({ $and: [{ Name: clientid }, { TestNum: 1 }, { Subtest: subtest }, { Measure: measure }] });
-  const compareNum2 = await clients.findOne({ $and: [{ Name: clientid }, { TestNum: 2 }, { Subtest: subtest }, { Measure: measure }] });
+ const compareNum1 = await clients.findOne({
+  $and: [
+    { Name: clientid },
+    { TestNum: 1 },
+    { Subtest: subtest },
+    { Measure: measure },
+    {
+      $or: [
+        { T: { $ne: null } },
+        { StandardScore: { $ne: null } },
+        { ScaledScore: { $ne: null } }
+      ]
+    }
+  ]
+});
+
+const compareNum2 = await clients.findOne({
+  $and: [
+    { Name: clientid },
+    { TestNum: 2 },
+    { Subtest: subtest },
+    { Measure: measure },
+    {
+      $or: [
+        { T: { $ne: null } },
+        { StandardScore: { $ne: null } },
+        { ScaledScore: { $ne: null } }
+      ]
+    }
+  ]
+});
 
   // Check if either compareNum1 or compareNum2 is null
   if (!compareNum1 || !compareNum2) {
@@ -137,10 +166,19 @@ async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) 
     return { score1: null, score2: null };
   }
 
-  // Get scores or fallback to T score if ScaledScore is null or undefined
-  const score1 = compareNum1?.ScaledScore !== null && compareNum1?.ScaledScore !== undefined ? Number(compareNum1.ScaledScore) : Number(compareNum1?.T);
-  const score2 = compareNum2?.ScaledScore !== null && compareNum2?.ScaledScore !== undefined ? Number(compareNum2.ScaledScore) : Number(compareNum2?.T);
+ const score1 = 
+  compareNum1?.ScaledScore !== null && compareNum1?.ScaledScore !== undefined 
+    ? Number(compareNum1.ScaledScore) 
+    : (compareNum1?.StandardScore !== null && compareNum1?.StandardScore !== undefined 
+        ? Number(compareNum1.StandardScore)
+        : Number(compareNum1?.T));
 
+const score2 = 
+  compareNum2?.ScaledScore !== null && compareNum2?.ScaledScore !== undefined 
+    ? Number(compareNum2.ScaledScore) 
+    : (compareNum2?.StandardScore !== null && compareNum2?.StandardScore !== undefined 
+        ? Number(compareNum2.StandardScore)
+        : Number(compareNum2?.T));
   //console.log('scores 1 and 2', score1, score2);
   return { score1: score1, score2: score2 };
 }
@@ -148,9 +186,6 @@ async function getCOMPAREScores(clientid, testNum, subtest, measure, scoretype) 
 
 async function getRCIs(clientid,measure,subtest,sem) {
   let rcisArray = [];
-
-
-
 
     //const specificSubtest = row[2];
 
@@ -488,12 +523,12 @@ const Submission = mongoose.model('Submission', submissionSchema, 'clients');
 
 // Handle form submission
 app.post('/submit', async (req, res) => {
- //console.log('Received form data:', req.body);
+ console.log('Received form data:', req.body);
   try {
     //await connectToDatabase(); 
-    // const uri = 'mongodb://localhost:27017/test';
-    // mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
+    const uri = 'mongodb://localhost:27017/test';
+    mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+//app.use(databaseConnectionMiddleware);
    // console.log('sumission sch',Submission);
   // Extract common fields from the request body
     const { Name, Sex, Education, Age, Race, TestNum} = req.body;

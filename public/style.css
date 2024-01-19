@@ -407,12 +407,7 @@ header h1{
 }
 
 
-  #ClientResult thead{
-    color:white;
 
-    background-color: #6A5E44;
-
-  }
 /*navigation*/
 #nav{
   float:right;
@@ -447,5 +442,9 @@ float:left;
   color: #555; /* Text color for a disabled look */
   background-color: #eee; /* Background color for a disabled look */
   cursor: not-allowed; /* Display a 'not-allowed' cursor on hover */
+}
+#downloadExcel{
+  display: block;
+  margin:0 auto;
 }
 

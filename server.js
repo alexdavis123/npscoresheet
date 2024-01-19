@@ -107,7 +107,7 @@ const insertdataArray = [
   ["WAIS-DS", "DSB","readonly","readonly","readonly","","Attention"],
   ["WAIS-DS", "DSS","readonly","readonly","readonly","","Attention"],
   ["TMTA", "","readonly","","readonly","readonly","Processing Speed"],
-  ["TMTB", "","readonly","","readonly","readonly","Executive"],
+  ["TMTB", "","readonly","","readonly","readonly","Executive Function"],
   ["NAB", "Naming","readonly","","readonly","readonly","Language"],
   ["COWAT", "","readonly","","readonly","readonly","Language"],
   ["ANT", "","readonly","","readonly","readonly","Language"],

@@ -333,8 +333,8 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
             console.error('Error querying conversion:', error);
           }
         }
-        if (subtest.Raw) {
-         // console.log(`Raw: ${subtest.Raw}`);
+        if (subtest.Raw && !subtest.T && !subtest.ScaledScore && !subtest.StandardScore) {
+          console.log(`Raw: ${subtest.Raw}`);
           // const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
           //   clientId,
           //   testNum,

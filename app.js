@@ -113,7 +113,9 @@ const insertdataArray = [
   ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive Function"],
   ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive Function"],
   ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive Function"],
-  ["ROCF", "","readonly","","readonly","readonly","Visuospatial"],
+  ["ROCF", "Copy","readonly","readonly","readonly","","Visuospatial"],
+  ["ROCF", "Immediate","readonly","","readonly","readonly","Visuospatial"],
+  ["ROCF", "Delay","readonly","","readonly","readonly","Visuospatial"],
   ];
 
 app.get('/insert', (req, res) => {

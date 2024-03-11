@@ -201,7 +201,7 @@ async function getRCIs(clientid,measure,subtest,sem) {
     const rci = (compareScores.score2 - compareScores.score1)/sed;
     rcisArray.push({ measure:measure,subtest: subtest, ...compareScores, diff: compareScores.score2 - compareScores.score1, sed: sed, rci: rci });
 
-    console.log('rcisArray at getRCIs',rcisArray);
+    //console.log('rcisArray at getRCIs',rcisArray);
   } catch (error) {
     console.error(`Error fetching compare scores for ${measure} - ${subtest}:`, error);
 
@@ -247,7 +247,7 @@ async function rearrangeData(query) {
       },
       ]).toArray();
 
-    console.log('Rearranged data:', rearrangedData);
+    //console.log('Rearranged data:', rearrangedData);
 
     return rearrangedData;
   } catch (error) {
@@ -301,7 +301,7 @@ async function getUniqueMeasureNames(query) {
 async function processTSSArray(resultInputArray,clientId,testNum) {
  // const resultsArray = [];
   //await connectToDatabase(); // Ensure the connection is established
-  console.log('resultinputarray',resultInputArray);
+  //console.log('resultinputarray',resultInputArray);
   const inputObject=resultInputArray;
 
   try {
@@ -394,7 +394,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
     // Ensure to close the client after processing
  // await client.close();
 }
-console.log('resultInputArray',resultInputArray);
+//console.log('resultInputArray',resultInputArray);
 return resultInputArray;
 }
 
@@ -547,7 +547,7 @@ app.post('/process', async (req, res) => {
     const testNum = req.body.testNum;
     //console.log('get client id', testNum );
     const query = { Name: clientId, TestNum: Number(testNum)};
-     console.log('find client', query  );
+     //console.log('find client', query  );
     // Use findOne to find a single document that matches the query
     const result = await clients.findOne(query);
     // console.log('find name age',result);
@@ -596,7 +596,7 @@ app.post('/process', async (req, res) => {
     const finalResult = Object.fromEntries(
       Object.entries(resultNotNull).filter(([key, value]) => Array.isArray(value) ? value.length > 0 : value !== null && value !== undefined)
       );
-    console.log('resultNotNull', finalResult);
+    //console.log('resultNotNull', finalResult);
 
     // Format output
     let outputArray = {
@@ -618,7 +618,7 @@ for (const measure in finalResult) {
   }
 }
 
-console.log(flatArray);
+//console.log(flatArray);
 
 
 
@@ -631,9 +631,9 @@ const rearrangedByDomain = flatArray.reduce((result, item) => {
   return result;
 }, {});
 
-console.log(rearrangedByDomain);
+//console.log(rearrangedByDomain);
 
-    console.log('ouputArray',outputArray);
+   // console.log('ouputArray',outputArray);
 
     // Render the results
     res.render('dynamicoutput', { outputArray,rearrangedByDomain, title: 'Client Result' });

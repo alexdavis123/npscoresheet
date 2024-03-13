@@ -294,10 +294,9 @@ async function getUniqueMeasureNames(query) {
   }
 }
 
-// Example usage:
 async function processTSSArray(resultInputArray,clientId,testNum) {
  // const resultsArray = [];
-  //await connectToDatabase(); // Ensure the connection is established
+
   //console.log('resultinputarray',resultInputArray);
   const inputObject=resultInputArray;
 
@@ -477,6 +476,7 @@ const submissionSchema = new mongoose.Schema({
   T: Number,
   StandardScore: Number,
   ScaledScore: Number,
+  //PR:Number,
   Domain: String,
 });
 const Submission = mongoose.model('Submission', submissionSchema, 'clients');
@@ -534,7 +534,12 @@ async function fetchLNames(testlst) {
   }
 }
 
+// const { OpenAI } = require('openai');
 
+// const openai = new OpenAI({ apiKey: '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' });
+
+//  ejs <!---------h1>Text AI Response</h1>
+ // <p><%= response %></p----------->
 
 app.post('/process', async (req, res) => {
  // console.log('post to process');
@@ -632,8 +637,20 @@ const rearrangedByDomain = flatArray.reduce((result, item) => {
 
    // console.log('ouputArray',outputArray);
 
+// const completion = await openai.chat.completions.create({
+//       messages: [
+//         {
+//           role: "system",
+//           content: "You are a helpful assistant designed to output JSON.",
+//         },
+//         { role: "user", content: "Who won the world series in 2020?" },
+//       ],
+//       model: "gpt-3.5-turbo-0125",
+//       response_format: { type: "json_object" },
+//     });
+
     // Render the results
-    res.render('dynamicoutput', { outputArray,rearrangedByDomain, title: 'Client Result' });
+    res.render('dynamicoutput', {outputArray,rearrangedByDomain, title: 'Client Result' });
   } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');
@@ -641,6 +658,12 @@ const rearrangedByDomain = flatArray.reduce((result, item) => {
     // No need to close the client here since it's already closed in the try block
   }
 });
+
+
+
+
+
+
 
 
 

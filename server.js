@@ -1,7 +1,7 @@
 
 //const uri = process.env.MONGODB_URI;
-//const port = process.env.PORT || 3000;
-const port = 3000;
+const port = process.env.PORT || 3000;
+//const port = 3000;
 const express = require('express');
 const ejs = require('ejs');
 //const { MongoClient } = require('mongodb');

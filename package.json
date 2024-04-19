@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stdlib/stats-anova1": "^0.2.1",
+    "@stdlib/stats-kruskal-test": "^0.2.1",
+    "anova": "^1.0.2",
     "body-parser": "^1.20.2",
     "busboy": "^1.6.0",
     "cors": "^2.8.5",
@@ -19,11 +22,14 @@
     "express-ejs-layouts": "^2.5.1",
     "express-fileupload": "^1.4.3",
     "fs": "^0.0.1-security",
+    "jstat": "^1.9.6",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4",
     "multer": "^1.4.4",
     "openai": "^4.28.4",
-    "pdf-parse": "^1.1.1"
+    "pdf-parse": "^1.1.1",
+    "simple-statistics": "^7.8.3",
+    "stats-analysis": "^2.0.0"
   },
   "description": ""
 }

@@ -1,117 +1,166 @@
-
-
-
-
-
 <form id="submitForm" method="post">
-<h2>Enter Client Data</h2>
-<div class="float-left" id="clientid">
-<label for="Name">ClientID:</label>
-<input type="text" id="name" name="Name" required><button type="button" id="generateBtn">Generate Random ID</button>
-<small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters or use the random id generator button</small>
-</div>
+    <h2>Enter Client Data</h2>
+    <div class="float-left" id="clientid">
+        <label for="Name">ClientID:</label>
+        <input type="text" id="name" name="Name" required>
+        <button type="button" id="generateBtn">Generate Random ID</button>
+        <small>Use a unique and deidentified client ID and save it with your client's paper files for later use. Please use at least 8 characters of numbers and letters or use the random id generator button</small>
+    </div>
 
+    <div class="float-right testnum">
+        <label for="TestNum">Test Number:</label>
+        <select id="testNum" name="TestNum" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+        </select>
+        <small id="testnumsmall">1: first time; This will be used to calculate RCI.</small>
+    </div>
 
-<!------div class="float-left">
-<label for="Sex">Sex</label>
-<select id="sex" name="Sex" required>
-<option value="M">M</option>
-<option value="F">F</option>
-</select>
-</div>
+    <div class="clear"></div>
 
-<div class="float-left">
-<label for="Age">Age:</label>
-<input type="number" id="age" name="Age" required>
-</div>
-<div class="float-left">
+    <div class="float-left" id="premorb">
+        <label for="premorbid">Premorbid Estimate:</label>
+        <input type="number" id="premorbid" name="Premorbid" min="1" required>
+        <small class="float-left">Calculate with algorithm or enter it</small>
+    </div>
 
-<label for="Education">Education:</label>
-<input type="number" id="education" name="Education" required>
+    <div class="float-left">
+        <label for="Sex">Sex:</label>
+        <select id="sex" name="Sex" required>
+            <option value="M">M</option>
+            <option value="F">F</option>
+        </select>
+    </div>
 
-</div>
-<div class="float-left">
+    <div class="float-left">
+        <label for="Age">Age:</label>
+        <input type="number" id="age" name="Age" min="1">
+    </div>
 
-<label for="Race">Race:</label>
-<select id="race" name="Race" required>
-<option value="White">White</option>
-<option value="Black">Black</option>
-<option value="Hispanic">Hispanic</option>
-<option value="Other">Other</option>
-</select>
+    <div class="float-left">
+        <label for="Education">Education:</label>
+        <input type="number" id="education" name="Education" min="1">
+    </div>
 
-</div----->
-<div class="float-right testnum" >
+    <div class="float-left">
+        <label for="Race">Race:</label>
+        <select id="race" name="Race" required>
+            <option value="White">White</option>
+            <option value="Black">Black</option>
+            <option value="Hispanic">Hispanic</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
 
-<label for="TestNum">Test Number:</label>
-<select id="testNum" name="TestNum" required>
-<option value="1">1</option>
-<option value="2">2</option>
-</select>
-<small id="testnumsmall">1: first time; This will be used to calculate RCI.</small>
-</div>
-<div class="clear"></div>
+    <div class="float-left">
+        <label for="spec">SPEC:</label>
+        <select id="spec" name="spec">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select>
+    </div>
 
-<div class="extractpdf">
- <p>If your BVMT-R PDF report resembles <a href="https://www.parinc.com/Portals/0/webuploads/samplerpts/BVMT_Score.pdf" target="_blank">this example</a> and NOT scanned, the table on the third page will be automatically extracted.</p>
-<lable for="bvmtrpdf"> Extract from BVMT-R PDF report</lable>
-<div class="clear"></div>
-<input type="file" name="bvmtrpdf" id="pdfInput" accept=".pdf">
-<button id="extractpdf" onclick="processPDF()">Extract Tables from Page 3</button>
-</div>
-<div class="clear"></div>
-<p> Note: If the test allows for both input of RAW and T score, T score MUST be entered to generate the score sheet. RAW score alone will not be converted to T score</p>
-<p> Tip: you can press TAB key to navigate down the input fields</p>
+    <div class="float-left">
+        <label for="ged">GED:</label>
+        <select id="ged" name="ged">
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+        </select>
+    </div>
 
-<table id="dataTable">
-<thead>
-<tr>
-<th>Measure</th>
-<th>Subtest / Norm</th>
-<th>Raw</th>
-<th>T</th>
-<th>StandardScore</th>
-<th>ScaledScore</th>
-<th>Domain</th>
-</tr>
-</thead>
+    <div class="float-left">
+        <label for="handedness">Handedness:</label>
+        <select id="handedness" name="handedness">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+        </select>
+    </div>
 
-<tbody>
-  <% for (let i = 0; i < insertdataArray.length; i++) { %>
-    <tr>
-      <% for (let j = 0; j < insertdataArray[i].length; j++) { %>
-        <td>
-          <% if (j < 2) { %>
-            <input type="text" value="<%= insertdataArray[i][j] %>" readonly class="readonly-input" name="<%= (j === 0) ? 'Measure' : 'Subtest' %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= '' %>" <% } %>>
-          <% } else if (j === 2) { %>
-            <input type="number" value="<%= insertdataArray[i][j] %>" name="Raw" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% } %>>
-          <% } else if (j === 3) { %>
-            <input type="number" value="<%= insertdataArray[i][j] %>" name="T" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% } %>>
-          <% } else if (j === insertdataArray[i].length - 1) { %>
-            <input type="text" value="<%= insertdataArray[i][j] %>" name="Domain" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% } %>>
-          <% } else { %>
-            <input type="<%= (j === 4 || j === 5) ? 'number' : 'text' %>" value="<%= insertdataArray[i][j] %>" name="<%= (j === 4) ? 'StandardScore' : (j === 5) ? 'ScaledScore' : '' %>" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 4 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 4 %>" <% } %>>
-          <% } %>
-        </td>
-      <% } %>
-    </tr>
-  <% } %>
-</tbody>
+    <div class="float-left">
+        <label for="residence">Residence:</label>
+        <select id="residence" name="residence">
+            <option value="urban">Urban</option>
+            <option value="rural">Rural</option>
+        </select>
+    </div>
 
+    <button id="generatepremorb" class="float-left">Generate Premorbid</button>
 
+    <div class="clear"></div>
 
+    <div class="extractpdf">
+        <p>If your BVMT-R PDF report resembles <a href="https://www.parinc.com/Portals/0/webuploads/samplerpts/BVMT_Score.pdf" target="_blank">this example</a> and NOT scanned, the table on the third page will be automatically extracted.</p>
+        <label for="bvmtrpdf"> Extract from BVMT-R PDF report</label>
+        <div class="clear"></div>
+        <input type="file" name="bvmtrpdf" id="pdfInput" accept=".pdf">
+        <button id="extractpdf" onclick="processPDF()">Extract Tables from Page 3</button>
+    </div>
 
-</table>
+    <div class="clear"></div>
 
+    <p> Note: If the test allows for both input of RAW and T score, T score MUST be entered to generate the score sheet. RAW score alone will not be converted to T score</p>
 
-<button id="saveForm">Save</button>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Measure</th>
+                <th>Subtest</th>
+                <th>Raw</th>
+                <th>T</th>
+                <th>StandardScore</th>
+                <th>ScaledScore</th>
+                <th>PR</th>
+                <th>Domain</th>
+                <th>Description</th>
+            </tr>
+        </thead>
 
+        <tbody>
+            <% for (let i = 0; i < insertdataArray.length; i++) { %>
+            <tr>
+                <% for (let j = 0; j < insertdataArray[i].length; j++) { %>
+                <td>
+                    <% if (j < 2) { %>
+                    <input type="text" value="<%= insertdataArray[i][j] %>" readonly class="readonly-input" name="<%= (j === 0) ? 'Measure' : 'Subtest' %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= '' %>" <% } %>>
+                    <% } else if (j === 2) { %>
+                    <input type="number" step=".01" value="<%= insertdataArray[i][j] %>" name="Raw" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 2 %>" <% } %>>
+                    <% } else if (j === 3) { %>
+                    <input type="number" step="1" value="<%= insertdataArray[i][j] %>" name="T" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 3 %>" <% } %>>
+                    <% } else if (j === 6) { %>
+                    <input type="number" step="1" value="<%= insertdataArray[i][j] %>" name="PR" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 4 %>" <% } %>>
+                    <% } else if (j === 7) { %>
+                    <input type="text" value="<%= insertdataArray[i][j] %>" name="Domain" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 5 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 5 %>" <% } %>>
+                    <% } else if (j === 8) { %>
+                    <input type="text" value="<%= insertdataArray[i][j] %>" name="Description" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 5 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + 5 %>" <% } %>>
+                    <% } else { %>
+                    <input step="1" type="<%= (j === 5 || j === 4) ? 'number' : 'text' %>" value="<%= insertdataArray[i][j] %>" name="<%= (j === 4) ? 'StandardScore' : (j === 5) ? 'ScaledScore' : '' %>" <% if (insertdataArray[i][j] === "readonly") { %>class="readonly-input" readonly<% } %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 5 %>" <% if (insertdataArray[i][j] !== "readonly") { %> tabindex="<%= (i * (insertdataArray[i].length - 2)) + j + 5 %>" <% } %>>
+                    <% } %>
+                </td>
+                <% } %>
+            </tr>
+            <% } %>
+        </tbody>
+        <thead>
+            <tr>
+                <th>Measure</th>
+                <th>Subtest</th>
+                <th>Raw</th>
+                <th>T</th>
+                <th>StandardScore</th>
+                <th>ScaledScore</th>
+                <th>PR</th>
+                <th>Domain</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+    </table>
 
+   
+
+    <button id="saveForm">Save</button>
 </form>
 
 <script src="/submitform.js"></script>
 <script src="/pdf.min.js"></script>
-
 <script src="/pdf.worker.min.js"></script>
 <script src="/processpdf.js"></script>
-

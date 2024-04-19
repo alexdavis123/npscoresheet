@@ -1,13 +1,14 @@
+
 //const uri = process.env.MONGODB_URI;
-const port = process.env.PORT || 3000;
-
-
-//const port = 3000;
+//const port = process.env.PORT || 3000;
+const port = 3000;
 const express = require('express');
 const ejs = require('ejs');
 //const { MongoClient } = require('mongodb');
 const mongoose = require('mongoose');
 const app = express();
+const { tukeyhsd } = require('stats-analysis');
+const jStat = require('jstat');
 
 const { databaseConnectionMiddleware, closeConnection, getDatabase, getClient } = require('./db');
 
@@ -42,7 +43,8 @@ const conversion = database.collection('conversion');
 const waisem =  database.collection('waissem');
 // const query = { Name: 'haha', TestNum: 1 };
 
-
+const Mpop = 50; // Population mean
+const SDpop = 10; // Population standard deviation
 
 app.get('/thankyou', (req, res) => {
   res.render('thankyou',{ title: 'Thank You'});
@@ -87,39 +89,54 @@ app.get('/getrci', (req, res) => {
 });
 
 const insertdataArray = [
-  ["BVMT-R", "Trial 1","","","readonly","readonly","Memory"],
-  ["BVMT-R", "Trial 2","","","readonly","readonly","Memory"],
-  ["BVMT-R", "Trial 3","","","readonly","readonly", "Memory"],
-  ["BVMT-R", "Total","","","readonly","readonly", "Memory"],
-  ["BVMT-R", "Learning","","","readonly","readonly", "Memory"],
-  ["BVMT-R", "DR","","","readonly","readonly","Memory"],
-  ["BVMT-R", "Copy","","readonly","readonly","readonly","Visuospatial"],
-  ["HVLT-R", "Trial 1","","","readonly","readonly","Memory"],
-  ["HVLT-R", "Trial 2","","","readonly","readonly","Memory"],
-  ["HVLT-R", "Trial 3","","","readonly","readonly","Memory"],
-  ["HVLT-R", "Total","readonly","","readonly","readonly","Memory"],
-  ["HVLT-R", "DR","readonly","","readonly","readonly","Memory"],
-  ["HVLT-R", "Retention%","readonly","","readonly","readonly","Memory"],
-  ["CVLT-III", "Trials","readonly","readonly","","readonly","Memory"],
-  ["CVLT-III", "Immediate","readonly","readonly","","readonly","Memory"],
-  ["CVLT-III", "Delay","readonly","readonly","","readonly","Memory"],
-  ["WMS-IV", "LM-I","readonly","readonly","readonly","","Memory"],
-  ["WMS-IV", "LM-II","readonly","readonly","readonly","","Memory"],
-  ["WAIS-DS", "Total","readonly","readonly","readonly","","Attention"],
-  ["TMTA", "","readonly","","readonly","readonly","Processing Speed"],
-  ["TMTB", "","readonly","","readonly","readonly","Executive Function"],
-  ["NAB", "Naming","readonly","","readonly","readonly","Language"],
-  ["BNT", "","readonly","","readonly","readonly","Language"],
-  ["COWAT", "","readonly","","readonly","readonly","Language"],
-  ["ANT", "","readonly","","readonly","readonly","Language"],
-  ["WCST", "Total Errors","readonly","readonly","","readonly","Executive Function"],
-  ["WCST", "Perseverative Responses","readonly","readonly","","readonly","Executive Function"],
-  ["WCST", "Perseverative Errors","readonly","readonly","","readonly","Executive Function"],
-  ["WCST", "Nonperseverative Errors","readonly","readonly","","readonly","Executive Function"],
-  ["WCST", "Conceptual Level Responses","readonly","readonly","","readonly","Executive Function"],
-  ["RCFT", "Copy","","readonly","readonly","readonly","Visuospatial"],
-  ["RCFT", "Immediate","readonly","","readonly","readonly","Memory"],
-  ["RCFT", "Delay","readonly","","readonly","readonly","Memory"],
+  ["HVLT-R", "Trial 1","","","readonly","readonly","readonly","Verbal Memory",""],
+  ["HVLT-R", "Trial 2","","","readonly","readonly","readonly","Verbal Memory",""],
+  ["HVLT-R", "Trial 3","","","readonly","readonly","readonly","Verbal Memory",""],
+  ["HVLT-R", "Total","readonly","","readonly","readonly","readonly","Verbal Memory",""],
+  ["HVLT-R", "DR","readonly","","readonly","readonly","readonly","Verbal Memory",""],
+  ["HVLT-R", "Retention%","readonly","","readonly","readonly","readonly","Verbal Memory",""],
+
+  ["BVMT-R", "Trial 1","","","readonly","readonly","readonly","Visual Memory",""],
+  ["BVMT-R", "Trial 2","","","readonly","readonly","readonly","Visual Memory",""],
+  ["BVMT-R", "Trial 3","","","readonly","readonly","readonly", "Visual Memory",""],
+  ["BVMT-R", "Total","","","readonly","readonly","readonly", "Visual Memory",""],
+  ["BVMT-R", "Learning","","","readonly","readonly","readonly", "Visual Memory",""],
+  ["BVMT-R", "DR","","","readonly","readonly","readonly","Visual Memory",""],
+  ["BVMT-R", "Copy","","readonly","readonly","readonly","","Visuospatial","copying simple figures"],
+  
+  ["WMS-IV", "LM-I","readonly","readonly","readonly","","readonly","Verbal Memory",""],
+  ["WMS-IV", "LM-II","readonly","readonly","readonly","","readonly","Verbal Memory",""],
+  ["CVLT-III", "Trials","readonly","readonly","","readonly","readonly","Verbal Memory","verbal learning and memory using a multiple-trial word list-learning format"],
+  ["CVLT-III", "Immediate","readonly","readonly","","readonly","readonly","Verbal Memory","immediately recalling the same list of words"],
+  ["CVLT-III", "Delay","readonly","readonly","","readonly","readonly","Verbal Memory","recalling the same list of words after a delay"],
+ 
+  ["RCFT", "Immediate","readonly","","readonly","readonly","readonly","Visual Memory","immediately recalling a complex figure"],
+  ["RCFT", "Delay","readonly","","readonly","readonly","readonly","Visual Memory","visual memory after a delay"],
+  ["RCFT", "Recognition","readonly","","readonly","readonly","readonly","Visual Memory","recognition visual memory"],
+  ["RCFT", "Copy","","readonly","readonly","readonly","","Visuospatial","visual-spatial constructional ability"],
+ 
+  ["WAIS-IV", "DS-Total","readonly","readonly","readonly","","readonly","Attention","auditory attention and working memory"],
+  ["WAIS-IV", "DSF","readonly","readonly","readonly","","readonly","Attention","simply attention"],
+  ["WAIS-IV", "DSB","readonly","readonly","readonly","","readonly","Attention","working memory manipulation"],
+  ["WAIS-IV", "DSS","readonly","readonly","readonly","","readonly","Attention","sequencing numbers"],
+  ["WAIS-IV", "SS","readonly","readonly","readonly","","readonly","Processing Speed","speed of information processing"],
+
+  ["TMTA", "","readonly","","readonly","readonly","readonly","Processing Speed","attention and speed"],
+  ["TMTB", "","readonly","","readonly","readonly","readonly","Executive Function","divided attention and complex alternating sequencing"],
+
+  ["NAB", "Naming","readonly","","readonly","readonly","readonly","Language","naming common objects"],
+  ["BNT", "","readonly","","readonly","readonly","readonly","Language","naming common objects"],
+  ["COWAT", "","readonly","","readonly","readonly","readonly","Language","letter fluency"],
+  ["ANT", "","readonly","","readonly","readonly","readonly","Language","semantic fluency"],
+  ["Verb Fluency", "","readonly","","readonly","readonly","readonly","Language","semantic fluency using action verbs"],
+
+  ["WCST", "Total Errors","readonly","","readonly","readonly","readonly","Executive Function","forming abstract concepts, shift and maintain set, and utilize feedback"],
+  ["WCST", "Persev Responses","readonly","","readonly","readonly","readonly","Executive Function","cognitive flexibility"],
+  ["WCST", "Persev Errors","readonly","","readonly","readonly","readonly","Executive Function","cognitive flexibility"],
+  ["WCST", "Nonperseverative Errors","readonly","","readonly","readonly","readonly","Executive Function","random error"],
+  ["WCST", "Conceptual Level Responses","readonly","","readonly","readonly","readonly","Executive Function","conceptual efficiency"],
+  ["GPT", "Dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed"],
+  ["GPT", "Non-dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed"],
   ];
 
 app.get('/insert', (req, res) => {
@@ -193,20 +210,13 @@ const score2 =
 async function getRCIs(clientid,measure,subtest,sem) {
   let rcisArray = [];
 
-    //const specificSubtest = row[2];
-
   try {
     const compareScores = await getCOMPAREScores(clientid, 1, subtest, measure, 'ScaledScore');
     const sed = 1.96 * Math.sqrt(2 * sem ** 2);
     const rci = (compareScores.score2 - compareScores.score1)/sed;
     rcisArray.push({ measure:measure,subtest: subtest, ...compareScores, diff: compareScores.score2 - compareScores.score1, sed: sed, rci: rci });
 
-      // resultsArray.push({
-      //   measure,
-      //   subtest,
-      //   scores: compareScores,
-      // });
-    console.log('rcisArray at getRCIs',rcisArray);
+    //console.log('rcisArray at getRCIs',rcisArray);
   } catch (error) {
     console.error(`Error fetching compare scores for ${measure} - ${subtest}:`, error);
 
@@ -215,20 +225,15 @@ async function getRCIs(clientid,measure,subtest,sem) {
       subtest,
       error: error.message,
     });
-  }
-  
+  } 
 
   return rcisArray;
-
 }
 
 
 async function rearrangeData(query) {
 
   try {
-   // await client.connect();
-  //  console.log('Connected to MongoDB');
-
 
     // Use MongoDB aggregation pipeline to reshape the data
     const rearrangedData = await clients.aggregate([
@@ -245,14 +250,16 @@ async function rearrangeData(query) {
               T: '$T',
               StandardScore: '$StandardScore',
               ScaledScore: '$ScaledScore',
+              PR:'$PR',
               Domain:'$Domain',
+              Description:'$Description',
             },
           },
         },
       },
       ]).toArray();
 
-   // console.log('Rearranged data:', rearrangedData);
+    //console.log('Rearranged data:', rearrangedData);
 
     return rearrangedData;
   } catch (error) {
@@ -283,8 +290,6 @@ function getDataForTargets(rearrangedData, targetMeasures) {
 async function getUniqueMeasureNames(query) {
 
   try {
-    //await client.connect();
-   // console.log('Connected to MongoDB');
 
     // Use MongoDB find and toArray to convert the cursor to an array
     const resultArray = await clients.find(query).toArray();
@@ -297,15 +302,13 @@ async function getUniqueMeasureNames(query) {
     console.error('Error connecting to MongoDB:', error);
     throw error; // Rethrow the error to handle it elsewhere if needed
   } finally {
-    //await client.close();
-    //console.log('Connection closed');
+ 
   }
 }
 
-// Example usage:
 async function processTSSArray(resultInputArray,clientId,testNum) {
  // const resultsArray = [];
-  //await connectToDatabase(); // Ensure the connection is established
+
   //console.log('resultinputarray',resultInputArray);
   const inputObject=resultInputArray;
 
@@ -325,7 +328,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           try {
           //await connectToDatabase();
             const resultConversionT = await conversion.findOne(queryConversionT);
-          //  console.log('result conversion T',resultConversionT);
+           // console.log('result conversion T',resultConversionT);
 
             subtest.PR = resultConversionT.PR;
             subtest.Descriptor = resultConversionT.Descriptor;
@@ -337,7 +340,8 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           }
         }
         if (subtest.Raw && !subtest.T && !subtest.ScaledScore && !subtest.StandardScore) {
-          console.log(`Raw: ${subtest.Raw}`);
+          //console.log(`Raw: ${subtest.Raw}`);
+          //console.log(`PR: ${subtest.PR}`);
           // const { resultTMTA, calculateTMTAZ, resultConversionZ } = await calculateTMTAZAndResult(
           //   clientId,
           //   testNum,
@@ -349,8 +353,27 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           // subtest.T= resultConversionZ[0].T;
           // console.log('convert Z',resultConversionZ[0]);
           const queryConversion = { Raw: subtest.Raw};
-          subtest.PR = "";
-          subtest.Descriptor = "None";
+          //subtest.PR = subtest.PR;
+
+          const percentileScore = subtest.PR;
+          if (percentileScore === null) {
+              subtest.Descriptor = '';
+            } else if (percentileScore > 98) {
+              subtest.Descriptor = 'Exceptionally High';
+            } else if (percentileScore >= 91 && percentileScore <= 97) {
+              subtest.Descriptor = 'Above Average';
+            } else if (percentileScore >= 75 && percentileScore <= 90) {
+              subtest.Descriptor = 'High Average';
+            } else if (percentileScore >= 25 && percentileScore <= 74) {
+              subtest.Descriptor = 'Average';
+            } else if (percentileScore >= 9 && percentileScore <= 24) {
+              subtest.Descriptor = 'Low Average';
+            } else if (percentileScore >= 2 && percentileScore <= 8) {
+              subtest.Descriptor = 'Below Average';
+            } else if (percentileScore < 2) {
+              subtest.Descriptor = 'Exceptionally Low';
+            }
+
           subtest.Z= "";
           subtest.T= "";
 
@@ -361,7 +384,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
           try {
           //await connectToDatabase();
             const resultConversion = await conversion.findOne(queryConversion);
-          //  console.log('result conversion StandardScore',resultConversion);
+            //console.log('result conversion StandardScore',resultConversion);
             subtest.T = resultConversion.T;
             subtest.PR = resultConversion.PR;
             subtest.Descriptor = resultConversion.Descriptor;
@@ -399,7 +422,7 @@ async function processTSSArray(resultInputArray,clientId,testNum) {
     // Ensure to close the client after processing
  // await client.close();
 }
-
+//console.log('resultInputArray',resultInputArray);
 return resultInputArray;
 }
 
@@ -470,6 +493,8 @@ async function calculateResultConversionZ(conversion, calculateTMTAZ) {
 //   }
 // }
 
+
+
 const submissionSchema = new mongoose.Schema({
   Name: String,
   Sex: String,
@@ -483,7 +508,10 @@ const submissionSchema = new mongoose.Schema({
   T: Number,
   StandardScore: Number,
   ScaledScore: Number,
+  PR:Number,
   Domain: String,
+  Description: String,
+  Premorbid: Number,
 });
 const Submission = mongoose.model('Submission', submissionSchema, 'clients');
 //Submission.create(dataToInsert);
@@ -493,12 +521,13 @@ app.post('/submit', async (req, res) => {
  //console.log('Received form data:', req.body);
   try {
     //await connectToDatabase(); 
-   const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
+    //const uri = 'mongodb://localhost:27017/test';
+    const uri = "mongodb+srv://npscoreuseradmin:Hp4Fj9nQ9zYfb2fl@npscoresheet.iz2w8nw.mongodb.net/?retryWrites=true&w=majority";
     mongoose.connect(uri, {});
 //app.use(databaseConnectionMiddleware);
    // console.log('sumission sch',Submission);
   // Extract common fields from the request body
-    const { Name, Sex, Education, Age, Race, TestNum} = req.body;
+    const { Name, Sex, Education, Age, Race, TestNum, Premorbid} = req.body;
     // Create two separate documents
     //const parseNumber = (value) => (isNaN(value) || value === '') ? null : parseInt(value);
 
@@ -542,18 +571,26 @@ async function fetchLNames(testlst) {
 
 
 
+// const { OpenAI } = require('openai');
+
+// const openai = new OpenAI({ apiKey: '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' });
+
+//  ejs <!---------h1>Text AI Response</h1>
+ // <p><%= response %></p----------->
+
 app.post('/process', async (req, res) => {
-  //console.log('post to process');
+ // console.log('post to process');
 
   try {
     const clientId = req.body.clientId;
+    const clientSex = req.body.Sex;
     const testNum = req.body.testNum;
     //console.log('get client id', testNum );
     const query = { Name: clientId, TestNum: Number(testNum)};
-    // console.log('find client', query  );
+     //console.log('find client', query  );
     // Use findOne to find a single document that matches the query
     const result = await clients.findOne(query);
-    // console.log('find name age',result);
+  // console.log('find name age sex',result);
 
     const rearrangedData = await rearrangeData(query);
 
@@ -562,9 +599,8 @@ app.post('/process', async (req, res) => {
     const targetMeasuresToRetrieve = uniqueMeasureNamesResult;
     const resultData = getDataForTargets(rearrangedData, targetMeasuresToRetrieve);
     const resultsTSS = await processTSSArray(resultData,clientId,testNum);
-    const testlistArray  = Object.fromEntries( 
-      Object.entries(resultsTSS ).map(([key, value]) => [key,value.filter(item => item.T !== null)]));
-
+    const testlistArray  = Object.fromEntries(Object.entries(resultsTSS ).map(([key, value]) => [key,value.filter(item => item.T !== null)]));
+    //console.log('testlistarray:', testlistArray);
 
     // Get keys that are not empty
     const nonEmptyKeys = Object.keys(testlistArray).filter(key => {
@@ -578,7 +614,7 @@ app.post('/process', async (req, res) => {
     .then((lnames) => {
 
       longNames=lnames;
-      // console.log('Resulting LNames:', lnames);
+      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -602,15 +638,16 @@ app.post('/process', async (req, res) => {
     //console.log('resultNotNull', finalResult);
 
     // Format output
-    // Format output
     let outputArray = {
       Client: clientId,
+      Sex:result.Sex,
      // ClientAge: result.Age,
      // TSS: finalResult,
+      Premorbid:result.Premorbid,
       TestList: longNames,
     };
 
-   const flatArray = [];
+const flatArray = [];
 
 for (const measure in finalResult) {
   const subtests = finalResult[measure];
@@ -635,8 +672,203 @@ const rearrangedByDomain = flatArray.reduce((result, item) => {
   return result;
 }, {});
 
-    // Render the results
-       res.render('dynamicoutput', { outputArray,rearrangedByDomain, title: 'Client Result' });
+//console.log('domain',rearrangedByDomain);
+
+
+const transformedArray = {};
+
+for (const domain in rearrangedByDomain) {
+  const tests = rearrangedByDomain[domain];
+  const groupedTestsArray = tests.reduce((acc, test) => {
+    if (!acc[test.Descriptor]) {
+      acc[test.Descriptor] = [];
+    }
+    acc[test.Descriptor].push(test);
+    return acc;
+  }, {});
+
+  transformedArray[domain] = [];
+
+  Object.entries(groupedTestsArray).forEach(([descriptor, testsArray]) => {
+    if (testsArray.length > 1) {
+      transformedArray[domain].push(testsArray);
+    } else {
+      transformedArray[domain].push(testsArray[0]);
+    }
+  });
+}
+
+//console.log(transformedArray);
+
+// console.log('domain',rearrangedByDomain);
+// console.log(transformedArray);
+
+
+
+const anova1 = require('@stdlib/stats-anova1');
+const data=rearrangedByDomain;
+const testDataWithStats={};
+// Calculate mean scores for each domain
+const domainAnova = {};
+const Mpremorb=outputArray.Premorbid;
+for (const domain in data) {
+
+   const domainValues = data[domain].map(entry => parseFloat(entry.T)).filter(value => !isNaN(value));
+    const mean = calculateMean(domainValues);
+    
+   
+    domainAnova[domain] = domainValues;
+    
+    const sd = calculateSD(domainValues, mean);
+    const scoreDifferences = calculateScoreDifferences(domainValues, mean);
+    const cohenD = calculateCohensD(parseFloat(mean), Mpop, sd, SDpop);
+    const n = countTScores(data)[domain];
+    const sem = calculateSEM(sd, n);
+    const ci95 = calculate95CI(sem);
+    const { heterogeneity, pValue } = calculateHeterogeneity(domainValues);
+    //const tfromMpremorb = calculateTStatistic(mean,n,Mpremorb);
+    const tfromMpop = calculateTStatistic(mean,n);
+    // Perform one-sample t-test
+    const { t: tPop, p: pPop }  = performOneSampleTTest(domainValues, Mpop);
+    const { t: tPremorb, p: pPremorb } = performOneSampleTTest(domainValues, Mpremorb);
+  
+
+    testDataWithStats[domain] = data[domain].map((entry, index) => ({
+        ...entry,
+        Mean: mean,
+        SD: sd,
+        DifferenceFromMean: scoreDifferences[index],
+        n: n,
+        tfromMpop:tfromMpop,
+        HeteroP: pValue,
+        ES: cohenD,
+        SEM: sem,
+        pPop:pPop,
+        pPremorb:pPremorb,
+        '95% CI': {
+            Lower: mean - ci95,
+            Upper: mean + ci95
+        },
+        //TukeyHSD: tukeyResult,
+    }));
+}
+
+// Extract means for ANOVA
+const scores = Object.values(domainAnova);
+// console.log('scores',scores );
+// Extract domain names for ANOVA
+const domains = Object.keys(domainAnova);
+// console.log('domains',domains);
+
+// console.log(domainAnova);
+
+// Flatten the scores and assign group labels
+const flattenedScores = [];
+const groupLabels = [];
+scores.forEach((scoreGroup, i) => {
+    scoreGroup.forEach(score => {
+        flattenedScores.push(score);
+        groupLabels.push(domains[i]);
+    });
+});
+
+// Perform within-group ANOVA
+//if (flattenedScores.length > 1) {
+    const anovaresult = anova1(flattenedScores, groupLabels);
+    // Further processing with the ANOVA result
+//}
+
+//console.log(flattenedScores, groupLabels);
+
+// Output ANOVA result
+//console.log('anova',anovaresult);
+
+
+const kruskalTest = require('@stdlib/stats-kruskal-test');
+
+
+// Filter out empty arrays
+const domainAnovanonEmptyData = Object.fromEntries(
+  Object.entries(domainAnova).filter(([_, scores]) => scores.length > 0)
+);
+
+// Prepare the arguments for kruskalTest
+const args = Object.values(domainAnovanonEmptyData);
+
+// Perform Kruskal-Wallis test
+const kruresult = kruskalTest(...args);
+
+// console.log('Kruskal-Wallis Test Result:');
+// console.log(kruresult);
+
+
+////tukey test
+
+const groups = {};
+groupLabels.forEach((label, index) => {
+    if (!groups[label]) {
+        groups[label] = [];
+    }
+    groups[label].push(flattenedScores[index]);
+});
+
+// Calculate group means
+const groupMeans = {};
+for (const label in groups) {
+    groupMeans[label] = jStat.mean(groups[label]);
+}
+
+// Total number of observations
+const totalObservations = flattenedScores.length;
+
+// Degrees of freedom for error
+const dfError = totalObservations - Object.keys(groupMeans).length;
+
+// Calculate Tukey's HSD
+const criticalValue = jStat.tukey.inv(0.05, Object.keys(groupMeans).length, dfError);
+
+// Calculate pairwise differences and check if they exceed the critical value
+const significantDifferences = [];
+const groupLabelsArr = Object.keys(groupMeans);
+for (let i = 0; i < groupLabelsArr.length; i++) {
+    for (let j = i + 1; j < groupLabelsArr.length; j++) {
+        const groupLabel1 = groupLabelsArr[i];
+        const groupLabel2 = groupLabelsArr[j];
+        const difference = Math.abs(groupMeans[groupLabel1] - groupMeans[groupLabel2]);
+        if (difference >= criticalValue) {
+            significantDifferences.push({
+                groups: [groupLabel1, groupLabel2],
+                difference: difference
+            });
+        }
+    }
+}
+
+// Output significant differences
+ // console.log("Significant Differences:");
+ // console.log(significantDifferences);
+//console.log('stat',testDataWithStats);
+
+const domainData = {};
+
+for (const domain in testDataWithStats) {
+  const entry = testDataWithStats[domain][0]; // Select the first entry for each domain
+  //console.log('entrydomain',entry);
+  domainData[domain] = {
+    Domain: entry.Domain,
+    Mean: entry.Mean,
+    SD: entry.SD,
+    n: entry.n,
+    HeteroP: entry.HeteroP,
+    ES: entry.ES,
+    SEM: entry.SEM,
+    pPop:entry.pPop,
+    pPremorb:entry.pPremorb,
+    '95% CI': entry['95% CI']
+  };
+}
+// console.log('output',outputArray);
+    res.render('dynamicoutput', {outputArray,anovaresult,kruresult,rearrangedByDomain,transformedArray,domainData,significantDifferences,title: 'Client Result' });
   } catch (error) {
     console.error('Error processing data:', error);
     res.status(500).send('Internal Server Error');
@@ -645,10 +877,136 @@ const rearrangedByDomain = flatArray.reduce((result, item) => {
   }
 });
 
+// Function to calculate Cohen's d
+function calculateCohensD(mean1, mean2, sd1, sd2) {
+    const pooledSD = Math.sqrt((Math.pow(sd1, 2) + Math.pow(sd2, 2)) / 2);
+    return (mean1 - mean2) / pooledSD;
+}
 
+// Function to calculate mean
+function calculateMean(values) {
+  const sum = values.reduce((acc, val) => acc + val, 0);
+  return sum / values.length;
+}
+
+// Function to calculate standard deviation
+function calculateSD(values, mean) {
+  const squaredDifferences = values.map(val => Math.pow(val - mean, 2));
+  const variance = calculateMean(squaredDifferences);
+  return Math.sqrt(variance);
+}
+
+// Function to calculate the difference from the mean
+function calculateScoreDifferences(values, mean) {
+  return values.map(val => val - mean);
+}
+
+// Function to count the number of non-empty T scores in each domain
+function countTScores(data) {
+    const domainCounts = {};
+    for (const domain in data) {
+        domainCounts[domain] = data[domain].filter(entry => entry.T !== undefined && entry.T !== '' && !isNaN(entry.T)).length;
+    }
+    return domainCounts;
+}
+
+// Function to calculate the t-statistic
+function calculateTStatistic(sampleMean, n) {
+    return (sampleMean - Mpop) / (SDpop / Math.sqrt(n));
+}
+
+// Function to calculate 95% CI
+function calculate95CI(sem) {
+    return 1.96 * sem; // 1.96 is the Z-score for 95% CI
+}
+// Function to calculate SEM
+function calculateSEM(sd, n) {
+    return sd / Math.sqrt(n);
+}
+// Function to calculate the sample mean
+function calculateSampleMean(data) {
+    let sum = 0;
+    let count = 0;
+    for (const domain in data) {
+        data[domain].forEach(subtest => {
+            sum += subtest.T;
+            count++;
+        });
+    }
+    return sum / count;
+}
+
+const { mean, standardDeviation } = require('simple-statistics');
+
+// Function to calculate heterogeneity
+function calculateHeterogeneity(values) {
+    // Filter out non-numeric values
+    const numericValues = values.filter(value => typeof value === 'number' && !isNaN(value));
+
+    // Check if there are at least two numeric values
+    if (numericValues.length < 2) {
+        return {
+            heterogeneity: 'N/A',
+            pValue: 'N/A'
+        };
+    }
+
+    // Calculate the standard deviation of the numeric values
+    const sd = standardDeviation(numericValues);
+
+    // Calculate the mean of the numeric values
+    const avg = mean(numericValues);
+
+    // Calculate the coefficient of variation (CV)
+    const cv = (sd / avg) * 100;
+
+    // Calculate the degrees of freedom (n - 1)
+    const df = numericValues.length - 1;
+
+    // Calculate the chi-square statistic
+    const chiSquare = Math.pow(sd, 2) / Math.pow(avg, 2) * df;
+
+    // Calculate the p-value using the chi-square distribution
+    const pValue = 1 - Math.abs(jStat.chisquare.cdf(chiSquare, df));
+
+    return {
+        heterogeneity: cv.toFixed(2),
+        pValue: pValue.toFixed(4)
+    };
+}
+
+
+
+// Function to perform one-sample t-test
+function performOneSampleTTest(sample, populationMean) {
+ // console.log('sampmple',sample);
+    const n = sample.length;
+    const sampleMean = sample.reduce((acc, val) => acc + val, 0) / n;
+    const sampleVariance = sample.reduce((acc, val) => acc + Math.pow(val - sampleMean, 2), 0) / (n - 1);
+    const standardError = Math.sqrt(sampleVariance / n);
+    const tValue = (sampleMean - populationMean) / standardError;
+    const degreesOfFreedom = n - 1;
+    // Calculate p-value using t-distribution
+    const pValue = require('jstat').ttest(tValue, degreesOfFreedom);
+//console.log(tValue, pValue);
+    return { t:tValue, p:pValue };
+}
+
+
+
+function calculateTukeyHSD(meanScores, groupArray) {
+    // Flatten mean scores and group array
+    const flattenedMeanScores = meanScores.flat();
+    const flattenedGroupArray = groupArray.flat();
+
+    // Perform Tukey's HSD test
+    const result = tukeyhsd(flattenedMeanScores, flattenedGroupArray);
+
+    return result;
+}
 
 app.post('/processrci', async (req, res) => {
-  //console.log('post to rci process');
+ // console.log('post to rci process');
 
   try {
     const clientId = req.body.clientid;
@@ -680,8 +1038,6 @@ app.post('/processrci', async (req, res) => {
      // console.log('rcis',rcis)
       rcisArray.push({ rcis });
     }
-
-
     const outputArray = rcisArray.map(item => {
       const { rcis } = item;
       if (rcis && rcis.length > 0) {
@@ -715,4 +1071,3 @@ process.on('exit', closeConnection);
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-

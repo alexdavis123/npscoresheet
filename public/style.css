@@ -1,13 +1,28 @@
+li span.negative-descriptor,li span.exceptionally-low,li span.below-average {
+  color: red;
+}
+
+#donate{
+  color: #fff;
+  background-color: #111;
+}
+
+#donate:hover{
+  background-color: #111;
+}
 
 
-.exceptionally-high  { background-color: green; }
-.above-average{ background-color: deepskyblue; }
-.below-average{background-color: orange; }
-.exceptionally-low { background-color: orangered; }
+table .exceptionally-high  { background-color: green; }
+table .above-average{ background-color: deepskyblue; }
+table .below-average{background-color: orange; }
+table .exceptionally-low { background-color: orangered; }
 
 input[type="text"] {
   font-size: 16px; /* Change the size to your preference */
   padding: 8px; /* Optional: Adjust padding as needed */
+}
+#dataTable input{
+  min-width: 60px;
 }
 body{
   font-family: 'Roboto', sans-serif;
@@ -283,7 +298,7 @@ main{
 }
 footer{
 
-  background-color: #BBE0E8;
+  background-color: #111;
   color: #fff;
   padding: 5px;
   text-align: right;
@@ -345,7 +360,7 @@ header h1{
     /* Adjust spacing between list items if needed */
   }
   nav a {
-    color: #fff;
+    color: #111;
     text-decoration: none;
 
     padding:8px 10px;
@@ -356,8 +371,8 @@ header h1{
   }
 
   nav a:hover {
-    color: #fff;
-    background-color: #111;
+    color: #111;
+    background-color: #fff;
 
   }
   #findClient {
@@ -414,18 +429,39 @@ header h1{
 #submitForm{
  width: 90%;
 }
-#submitForm .float-left{
-  width:70%;
+#submitForm #premorb{
+  width:206px
+  
+}
+#submitForm #generatepremorb{
+width:250px;
+margin:40px 0 0 0;
+}
+#submitForm #premorb input{
+  width:50px;
+  float:left;
+  
 }
 
+#submitForm #premorb small{
+float:left;
+width:70%;
+margin:3px 0 0 10px;
+}
+#submitForm #clientid{
+  width: 70%;
+}
 #submitForm #clientid input{
   float:left;
   width:30%;
 }
+#submitForm #age,#submitForm #education{
+  width: 50px;
+}
 #submitForm #clientid button{
 float:left;
   width:20%;
-  margin:0 0 0 10px;
+  margin:3px 0 0 10px;
 }
 #submitForm #clientid small{
 float:left;

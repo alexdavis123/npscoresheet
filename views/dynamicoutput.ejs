@@ -1,7 +1,7 @@
 <div class="float-container">
 
 
-  <h2><%= JSON.stringify(outputArray.Client).replace(/"/g, '') %> Result</h2>
+  <h2><%= JSON.stringify(outputArray.Client).replace(/"/g, '') %> Result Sex: <%=outputArray.Sex%></h2>
 
 <h3> Tests Used </h3>
 
@@ -15,6 +15,61 @@
   <p>No tests available.</p>
 <% } %>
 
+<h3>Results</h3>
+
+<ul>
+
+<% Object.keys(transformedArray).forEach(domain => { %>
+  <li>
+    <b><%= domain %>:</b>
+    <% transformedArray[domain].forEach(item => { %>
+      <% if (Array.isArray(item)) { %>
+        <% const count = item.length; %>
+        <% item.forEach((subItem, index) => { %>
+          <% const isLastItem = index === count - 1; %>
+          <% if (subItem.Description) { %>
+            <% if (subItem.Descriptor) { %>
+              <% const descriptor = subItem.Descriptor.toLowerCase(); %>
+              <% const descriptorParts = subItem.Description.split(descriptor); %>
+              <% const isNegativeDescriptor = descriptor === 'exceptionally low' || descriptor === 'below average'; %>
+              
+              <% if (!isLastItem) { %>
+                
+              <% } %>
+            <% } %>
+          <% } %>
+        <% }); %>
+        <% if (count > 1) { %>
+
+           <%= item.map((subItem, index) => `${subItem.Measure} ${subItem.Subtest}, ${subItem.Description}`).join(' and ') %> were <span class="<%= item[0].Descriptor.toLowerCase().replace(/ /g, '-') %>"><%= item[0].Descriptor.toLowerCase() %>, <%= item.map(subItem => parseInt(subItem.T)).join('T and ') %>T </span> respectively.
+        <% } %>
+      <% } else { %>
+        <% if (item.Description) { %>
+          <% if (item.Descriptor) { %>
+            <% const descriptor = item.Descriptor.toLowerCase(); %>
+            <% const descriptorParts = item.Description.split(descriptor); %>
+            <% const isNegativeDescriptor = descriptor === 'exceptionally low' || descriptor === 'below average'; %>
+            <span>
+             On <%= item.Measure %> <%= item.Subtest %>, a measure of <%= descriptorParts[0] %>,
+                  <%= outputArray.Sex === 'M' ? 'he' : 'she' %> performed in the
+                  <span class="<%= isNegativeDescriptor ? 'negative-descriptor' : '' %>">
+                  <%= item.Descriptor.toLowerCase() %> range (<%= parseInt(item.T) %>T)</span>. 
+
+            </span>
+          <% } %>
+        <% } %>
+      <% } %>
+    <% }); %>
+  </li>
+<% }); %>
+
+
+</ul>
+
+
+
+
+<h3>Summary Table</h3>
 <table border="0" id="ClientResult" class="content-table">
   <thead>
     <tr>
@@ -37,7 +92,7 @@
       <% let lastMeasure = null; %>
       <% for (const item of items) { %>
         <% if (item.Measure !== lastMeasure) { %>
-          <tr class="<%= item.Descriptor.replace(/ /g, '-').toLowerCase() %>">
+          <tr class="<%= item.Descriptor ? item.Descriptor.replace(/ /g, '-').toLowerCase() : '' %>">
             <td><%= item.Measure %></td>
             <td><%= item.Subtest %></td>
             <td><%= item.Raw %></td>
@@ -69,5 +124,236 @@
 
 
 <button id="downloadExcel">Download Excel</button>
+
+<h3> Statistical Analysis</h3>
+<!-- Check if both ANOVA and Kruskal-Wallis results indicate no significant differences -->
+<% if (anovaresult.rejected === false && kruresult.rejected === false) { %>
+  <p>There are no significant differences among the domains.</p>
+<% } else { %>
+  <!-- Check if ANOVA result indicates significant differences -->
+  <% if (anovaresult.rejected === true) { %>
+    <p>There are significant differences among the domains according to ANOVA.</p>
+  <% } %>
+  
+  <!-- Check if Kruskal-Wallis result indicates significant differences -->
+  <% if (kruresult.rejected === true) { %>
+    <p>There are significant differences among the deomains according to Kruskal-Wallis.</p>
+  <% } %>
+<% } %>
+
+<% if (anovaresult.rejected === true || kruresult.rejected === true) { %>
+  <h2>Significant Differences</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Domain 1</th>
+        <th>Domain 2</th>
+        <th>Difference</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% significantDifferences.forEach(difference => { %>
+        <tr>
+          <td><%= difference.groups[0] %></td>
+          <td><%= difference.groups[1] %></td>
+          <td><%= difference.difference.toFixed(2) %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+<% } else { %>
+<% } %>
+
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Domain</th>
+      <th>Mean</th>
+      <th>SD</th>
+      <th>n</th>
+      <th>Hetero P</th>
+      <th>ES</th>
+      <th>SEM</th>
+      <th>p (Pop)</th>
+      <th>p (Premorb)</th>
+      <th>95% CI (Lower)</th>
+      <th>95% CI (Upper)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (const domain in domainData) { %>
+      <tr>
+        <td><%= domainData[domain].Domain %></td>
+<td><%= isNaN(domainData[domain].Mean) ? domainData[domain].Mean : domainData[domain].Mean.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain].SD) ? domainData[domain].SD : domainData[domain].SD.toFixed(2) %></td>
+<td><%= domainData[domain].n %></td>
+<td><%= typeof domainData[domain].HeteroP === 'number' ? domainData[domain].HeteroP.toFixed(2) : domainData[domain].HeteroP %></td>
+<td><%= isNaN(domainData[domain].ES) ? domainData[domain].ES : domainData[domain].ES.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain].SEM) ? domainData[domain].SEM : domainData[domain].SEM.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain].pPop) ? domainData[domain].pPop : domainData[domain].pPop.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain].pPremorb) ? domainData[domain].pPremorb : domainData[domain].pPremorb.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain]['95% CI'].Lower) ? domainData[domain]['95% CI'].Lower : domainData[domain]['95% CI'].Lower.toFixed(2) %></td>
+<td><%= isNaN(domainData[domain]['95% CI'].Upper) ? domainData[domain]['95% CI'].Upper : domainData[domain]['95% CI'].Upper.toFixed(2) %></td>
+
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+<div>
+  <canvas id="lineChart"></canvas>
+</div>
 </div>
 <script src="/download-excel.js"></script>
+<script>
+    // Extracting data for the line chart
+    const domains = [];
+    const meanValues = [];
+    const lowerCI = [];
+    const upperCI = [];
+
+    // Iterate over keys of domainData object
+    <% for (const domain in domainData) { %>
+        // Check if the mean value is valid (not NaN)
+        <% if (!isNaN(domainData[domain].Mean)) { %>
+            domains.push('<%= domainData[domain].Domain %>'); // Push domain name
+            meanValues.push(<%= domainData[domain].Mean %>); // Push mean value
+            lowerCI.push(<%= domainData[domain]['95% CI'].Lower %>); // Push lower CI
+            upperCI.push(<%= domainData[domain]['95% CI'].Upper %>); // Push upper CI
+        <% } %>
+    <% } %>
+
+    // Create an array to store the vertical line data
+    const verticalLines = meanValues.map((value, index) => {
+        return {
+            x: index, // Position the line at each data point
+            yMin: lowerCI[index], // Lower CI value
+            yMax: upperCI[index] // Upper CI value
+        };
+    });
+
+
+    // Chart.js configuration
+    const ctx = document.getElementById('lineChart').getContext('2d');
+
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: domains,
+            datasets: [{
+                label: 'Domain Mean',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 3,
+                data: meanValues
+            }, {
+                label: 'Upper 95% CI',
+                backgroundColor: 'blue', // Background color for the interval
+                borderColor: 'rgba(0, 0, 0, 0)', // Border color for the interval
+                borderWidth: 3,
+                data: upperCI, // Upper CI values
+                fill: false  // Fill between the lines
+            }, {
+                label: 'Lower 95% CI',
+                backgroundColor: 'blue', // Background color for the interval
+                borderColor: 'rgba(0, 0, 0, 0)', // Border color for the interval
+                borderWidth: 3,
+                data: lowerCI, // Lower CI values
+                fill: false // Don't fill between the lines
+            },{
+              label: 'Premorbid',
+                backgroundColor: 'red', // Background color for the interval
+                borderColor: 'rgba(0, 0, 0, 0)', // Border color for the interval
+                data: 1,
+                fill: false // Don't fill between the lines
+
+
+            },{
+            label: 'Population Mean',
+                backgroundColor: 'black', // Background color for the interval
+                borderColor: 'rgba(0, 0, 0, 0)', // Border color for the interval
+                data: 1,
+                fill: false // Don't fill between the lines
+
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100,
+                    ticks: {
+                        stepSize: 10
+                    }
+                }
+            },
+            plugins: {
+                annotation: {
+                    annotations: {
+                        annotation1: {
+                            type: 'line',
+                            borderColor: 'black',
+                            borderWidth: 2,
+                            click: function({chart, element}) {
+                                console.log('Line annotation clicked');
+                            },
+                           
+                            scaleID: 'y',
+                            value: 50
+                        },
+                        annotation2: {
+                          type: 'line',
+                          borderColor: 'red',
+                          borderWidth: 2,
+                          click: function({chart, element}) {
+                              console.log('Line annotation clicked');
+                          },
+                          scaleID: 'y',
+                          value: <%= outputArray.Premorbid ? outputArray.Premorbid : 50 %>
+                      }
+                    }
+                },
+
+            },
+
+
+
+        }
+    });
+
+    const populationMean = 50; // Example population mean value
+    const premorbidMean = <%= outputArray.Premorbid %>; // Premorbid mean value from server-side data
+
+    // Define annotations after chart initialization
+    const annotation3 = {
+        type: 'box',
+        borderWidth:0,
+        xScaleID: 'x',
+        yScaleID: 'y',
+        xMin: 0,
+        xMax: domains.length - 1,
+        yMin: populationMean - 15,
+        yMax: populationMean + 15,
+        backgroundColor: 'rgba(255, 0, 0, 0.2)',
+    };
+
+    const annotation4 = {
+        type: 'box',
+        borderWidth:0,
+        xScaleID: 'x',
+        yScaleID: 'y',
+        xMin: 0,
+        xMax: domains.length - 1,
+        yMin: premorbidMean - 15,
+        yMax: premorbidMean + 15,
+        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+    };
+
+    // Add annotations to the chart
+    lineChart.options.plugins.annotation.annotations.annotation3 = annotation3;
+    lineChart.options.plugins.annotation.annotations.annotation4 = annotation4;
+
+</script>
+
+
+
+

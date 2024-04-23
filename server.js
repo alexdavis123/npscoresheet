@@ -107,8 +107,8 @@ const insertdataArray = [
   ["WMS-IV", "LM-I","readonly","readonly","readonly","","readonly","Verbal Memory",""],
   ["WMS-IV", "LM-II","readonly","readonly","readonly","","readonly","Verbal Memory",""],
   ["CVLT-III", "Trials","readonly","readonly","","readonly","readonly","Verbal Memory","verbal learning and memory using a multiple-trial word list-learning format"],
-  ["CVLT-III", "Immediate","readonly","readonly","","readonly","readonly","Verbal Memory","immediately recalling the same list of words"],
-  ["CVLT-III", "Delay","readonly","readonly","","readonly","readonly","Verbal Memory","recalling the same list of words after a delay"],
+  ["CVLT-III", "Delayed Recall","readonly","readonly","","readonly","readonly","Verbal Memory","recalling the same list of words after a delay"],
+  ["CVLT-III", "Total Recall","readonly","readonly","","readonly","readonly","Verbal Memory","overal total recall"],
  
   ["RCFT", "Immediate","readonly","","readonly","readonly","readonly","Visual Memory","immediately recalling a complex figure"],
   ["RCFT", "Delay","readonly","","readonly","readonly","readonly","Visual Memory","visual memory after a delay"],

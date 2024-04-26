@@ -108,7 +108,7 @@ const insertdataArray = [
   ["WMS-IV", "LM-II","readonly","readonly","readonly","","readonly","Verbal Memory","story memory 2"],
   ["CVLT-III", "Trials","readonly","readonly","","readonly","readonly","Verbal Memory","verbal list learning"],
   ["CVLT-III", "Delayed Recall","readonly","readonly","","readonly","readonly","Verbal Memory","recalling the same list of words after a delay"],
-  ["CVLT-III", "Total Recall","readonly","readonly","","readonly","readonly","Verbal Memory","overal total recall"],
+  ["CVLT-III", "Total Recall","readonly","readonly","","readonly","readonly","Verbal Memory","total recall"],
  
   ["RCFT", "Immediate","readonly","","readonly","readonly","readonly","Visual Memory","immediately recalling a complex figure"],
   ["RCFT", "Delay","readonly","","readonly","readonly","readonly","Visual Memory","visual memory after a delay"],
@@ -135,8 +135,8 @@ const insertdataArray = [
   ["WCST", "Persev Errors","readonly","","readonly","readonly","readonly","Executive Function","cognitive flexibility"],
   ["WCST", "Nonperseverative Errors","readonly","","readonly","readonly","readonly","Executive Function","random error"],
   ["WCST", "Conceptual Level Responses","readonly","","readonly","readonly","readonly","Executive Function","conceptual efficiency"],
-  ["GPT", "Dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed"],
-  ["GPT", "Non-dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed"],
+  ["GPT", "Dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed of the dominant hand."],
+  ["GPT", "Non-dominant","readonly","","readonly","readonly","readonly","Sensori-motor","eye-hand coordination and motor speed of the non-dominant hand"],
   ];
 
 app.get('/insert', (req, res) => {

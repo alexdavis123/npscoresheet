@@ -132,12 +132,12 @@
 <% } else { %>
   <!-- Check if ANOVA result indicates significant differences -->
   <% if (anovaresult.rejected === true) { %>
-    <p>There are significant differences among the domains according to ANOVA.</p>
+    <p>There are significant differnces among the domains.</p>
   <% } %>
   
   <!-- Check if Kruskal-Wallis result indicates significant differences -->
   <% if (kruresult.rejected === true) { %>
-    <p>There are significant differences among the deomains according to Kruskal-Wallis.</p>
+    <p>There are significant differences among the deomains.</p>
   <% } %>
 <% } %>
 
@@ -164,7 +164,9 @@
 <% } else { %>
 <% } %>
 
-
+<small>Hetero P: domain heterogeneity
+statistic. High heterogeneity suggests that the clinician
+has chosen to load a test on an inappropriate factor. ES: Effect Sizes/Cohen's d. SEM: estimated standard error of the mean. p (Pop): siginificant level from population mean. p (Premorb): significant level from premorbid mean.&#42;</small>
 <table border="1">
   <thead>
     <tr>
@@ -200,6 +202,7 @@
     <% } %>
   </tbody>
 </table>
+
 <div>
   <canvas id="lineChart"></canvas>
 </div>
@@ -356,4 +359,4 @@
 
 
 
-
+<small>&#42; Rohling, M.L., Miller, L.S. & Langhinrichsen-Rohling, J. Rohling's Interpretive Method for Neuropsychological Case Data: A Response to Critics. Neuropsychol Rev 14, 155–169 (2004). https://doi.org/10.1023/B:NERV.0000048182.55980.4b</small>

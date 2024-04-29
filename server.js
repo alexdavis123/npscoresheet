@@ -106,11 +106,11 @@ const insertdataArray = [
   
   ["WMS-IV", "LM-I","readonly","readonly","readonly","","readonly","Verbal Memory","story memory 1"],
   ["WMS-IV", "LM-II","readonly","readonly","readonly","","readonly","Verbal Memory","story memory 2"],
-  ["CVLT-III", "Trials","readonly","readonly","","readonly","readonly","Verbal Memory","verbal list learning"],
+ ["CVLT-III", "Trials","readonly","readonly","","readonly","readonly","Verbal Memory","ability to learn a list of words"],
   ["CVLT-III", "Delayed Recall","readonly","readonly","","readonly","readonly","Verbal Memory","recalling the same list of words after a delay"],
   ["CVLT-III", "Total Recall","readonly","readonly","","readonly","readonly","Verbal Memory","total recall"],
  
-  ["RCFT", "Immediate","readonly","","readonly","readonly","readonly","Visual Memory","immediately recalling a complex figure"],
+  ["RCFT", "Immediate","readonly","","readonly","readonly","readonly","Visual Memory","immediately recall for a complex figure"],
   ["RCFT", "Delay","readonly","","readonly","readonly","readonly","Visual Memory","visual memory after a delay"],
   ["RCFT", "Recognition","readonly","","readonly","readonly","readonly","Visual Memory","recognition visual memory"],
   ["RCFT", "Copy","","readonly","readonly","readonly","","Visuospatial","visual-spatial constructional ability"],
